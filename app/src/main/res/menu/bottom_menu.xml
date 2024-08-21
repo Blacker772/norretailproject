@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/routeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_route"
+        android:title="МАРШРУТ" />
+
+    <item
+        android:id="@+id/priceListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_pricelist"
+        android:title="ПРАЙС-ЛИСТ" />
+
+    <item
+        android:id="@+id/reportFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_report"
+        android:title="ОТЧЕТЫ" />
+
+</menu>

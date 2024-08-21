@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Восток</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="Enter">Войти</string>
+    <string name="resetPassword"><u>Забыли пароль?</u></string>
+    <string name="RememberData">Запомнить меня</string>
+    <string name="Mail">Почта</string>
+    <string name="SentCode">Отправить код</string>
+    <string name="Code">Введите код</string>
+    <string name="Apply">Подтвердить</string>
+    <string name="newsPassword">Новый пароль</string>
+    <string name="applypass">Подтвердите пароль</string>
+    <string name="Save">Сохранить</string>
+    <string name="SignUp">Зарегистрироваться</string>
+    <string name="notAcc">Нету аккаунта?</string>
+    <string name="Surname">Фамилия</string>
+    <string name="Name">Имя</string>
+    <string name="Patronymic">Отчество</string>
+    <string name="sign">Регистрация</string>
+</resources>
