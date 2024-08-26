@@ -1,4 +1,4 @@
-package com.example.testapp.ui.main_menu
+package com.example.testapp.ui.main_menu.viewpager
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentViewpagerBinding
-import com.example.testapp.ui.viewpager.ViewPagerAdapter
+import com.example.testapp.ui.main_menu.header.HeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +32,7 @@ class ViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRV()
-        adapter.updateAddressList(listOfButton())
+        adapter.updateAddressList(viewModel.listOfButton())
         binding?.btMenu?.setOnClickListener {
             binding?.drawerLayout?.openDrawer(GravityCompat.START)
         }
@@ -72,8 +72,6 @@ class ViewPagerFragment : Fragment() {
                 else -> false
             }
         }
-
-
     }
 
     //перелистывание фрагментов
@@ -81,6 +79,7 @@ class ViewPagerFragment : Fragment() {
         binding?.viewPager2?.setCurrentItem(position,true)
     }
 
+    //инициализация списка
     private fun initRV() {
         header = binding?.navigationView?.getHeaderView(0)
         val rvList = header?.findViewById<RecyclerView>(R.id.rvListButton)
@@ -91,14 +90,6 @@ class ViewPagerFragment : Fragment() {
             false
         )
     }
-
-    private fun listOfButton() = listOf(
-        ButtonModel(R.drawable.ic_acc, "Мой Профиль"),
-        ButtonModel(R.drawable.ic_download, "Загрузить данные"),
-        ButtonModel(R.drawable.ic_upload, "Выгрузить данные"),
-        ButtonModel(R.drawable.ic_manual, "Справочники"),
-        ButtonModel(R.drawable.ic_setting1, "Настройки")
-    )
 
     override fun onDestroyView() {
         super.onDestroyView()

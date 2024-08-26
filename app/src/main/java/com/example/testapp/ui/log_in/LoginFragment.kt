@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.UiState
-import com.example.testapp.ui.main_menu.ViewPagerFragment
+import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

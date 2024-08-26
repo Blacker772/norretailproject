@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.testapp.ui.main_menu.ViewPagerFragment"
+        android:name="com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_viewpager" />
     <fragment

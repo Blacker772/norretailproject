@@ -1,4 +1,4 @@
-package com.example.testapp.ui.viewpager
+package com.example.testapp.ui.main_menu.pages.route
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.testapp.R
 
-class ReportFragment : Fragment() {
+class RouteFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_report, container, false)
+        return inflater.inflate(R.layout.fragment_route, container, false)
     }
 
 }
