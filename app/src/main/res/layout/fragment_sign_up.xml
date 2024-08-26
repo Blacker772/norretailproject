@@ -27,6 +27,7 @@
 
                <ImageButton
                    android:id="@+id/btBack"
+                   android:importantForAccessibility="no"
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toTopOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +46,7 @@
                    app:layout_constraintBottom_toBottomOf="@id/btBack"
                    app:layout_constraintEnd_toEndOf="parent"
                    app:layout_constraintHorizontal_bias="0.42"
-                   android:fontFamily="@font/roboto_mediumitalic"
+                   android:fontFamily="@font/roboto_medium_italic"
                    android:textColor="@color/white"
                    android:textSize="28sp" />
            </androidx.constraintlayout.widget.ConstraintLayout>

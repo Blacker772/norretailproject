@@ -31,7 +31,7 @@
         android:id="@+id/btApply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_mediumitalic"
+        android:fontFamily="@font/roboto_medium_italic"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
