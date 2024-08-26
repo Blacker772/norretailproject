@@ -12,7 +12,7 @@
     <string name="Code">Введите код</string>
     <string name="Apply">Подтвердить</string>
     <string name="newsPassword">Новый пароль</string>
-    <string name="applypass">Подтвердите пароль</string>
+    <string name="apply_pass">Подтвердите пароль</string>
     <string name="Save">Сохранить</string>
     <string name="SignUp">Зарегистрироваться</string>
     <string name="notAcc">Нету аккаунта?</string>
