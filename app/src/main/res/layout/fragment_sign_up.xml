@@ -47,13 +47,9 @@
                    app:layout_constraintHorizontal_bias="0.42"
                    android:fontFamily="@font/roboto_mediumitalic"
                    android:textColor="@color/white"
-                   android:textSize="28sp"
-                   />
-
+                   android:textSize="28sp" />
            </androidx.constraintlayout.widget.ConstraintLayout>
-
        </androidx.appcompat.widget.Toolbar>
-
    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -157,9 +153,7 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_family"
             android:drawablePadding="10dp"
-            android:imeOptions="actionNext"
-            />
-
+            android:imeOptions="actionNext" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -238,7 +232,6 @@
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btRegisterUser"
         android:layout_width="match_parent"
@@ -257,6 +250,4 @@
         app:icon="@drawable/ic_add_user"
         app:iconGravity="textStart"
         app:iconSize="25dp"/>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
