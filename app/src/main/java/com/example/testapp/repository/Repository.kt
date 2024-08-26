@@ -11,7 +11,6 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val apiService: ApiService
 ) {
-
     suspend fun getLoginRepo(login: String, password: String): Flow<UserModel> = flow {
         val result = apiService.getLogin(AuthModel(login, password))
         if (result.isSuccessful){

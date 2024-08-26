@@ -69,14 +69,16 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLogin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_login"
-            android:drawablePadding="10dp"/>
+            android:drawablePadding="10dp"
+            android:imeOptions="actionNext"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -93,7 +95,8 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
@@ -101,7 +104,8 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -118,7 +122,8 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword2"
@@ -126,7 +131,8 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="10dp"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -142,7 +148,8 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etFamily"
@@ -150,6 +157,7 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_family"
             android:drawablePadding="10dp"
+            android:imeOptions="actionNext"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -167,14 +175,16 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_name"
-            android:drawablePadding="10dp"/>
+            android:drawablePadding="10dp"
+            android:imeOptions="actionNext"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -190,14 +200,16 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionDone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLastname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_lastname"
-            android:drawablePadding="10dp"/>
+            android:drawablePadding="10dp"
+            android:imeOptions="actionDone"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -213,7 +225,8 @@
         android:background="@color/white"
         app:boxStrokeColor="@color/blue"
         app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        app:hintTextColor="@color/black"
+        android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMail"
@@ -221,7 +234,8 @@
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_mail"
             android:drawablePadding="10dp"
-            android:inputType="textEmailAddress"/>
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
 

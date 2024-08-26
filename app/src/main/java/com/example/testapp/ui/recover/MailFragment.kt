@@ -11,7 +11,7 @@ import com.example.testapp.databinding.FragmentRecoverBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RecoverFragment : Fragment() {
+class MailFragment : Fragment() {
 
     private var binding: FragmentRecoverBinding? = null
 

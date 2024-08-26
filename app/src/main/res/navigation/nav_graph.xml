@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_viewpager" />
     <fragment
         android:id="@+id/recoverFragment"
-        android:name="com.example.testapp.ui.recover.RecoverFragment"
+        android:name="com.example.testapp.ui.recover.MailFragment"
         android:label="fragment_recover"
         tools:layout="@layout/fragment_recover" >
         <action

@@ -11,7 +11,6 @@ class SignUpViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-
     suspend fun createUser(
         login: String, password: String, family: String,
         name: String, lastname: String, email: String

@@ -1,15 +1,28 @@
 package com.example.testapp.ui.sign_up
 
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.testapp.R
 import com.example.testapp.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +35,11 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -52,9 +69,11 @@ class SignUpFragment : Fragment() {
                 && email.isNotEmpty()
             ) {
                 if (password.length >= 6) {
+                    binding?.tiPassword?.error = null
                     if (password == checkPassword) {
-
+                        binding?.tiPassword2?.error = null
                         if (email.isEmailValid()) {
+                            binding?.tiMail?.error = null
                             lifecycleScope.launch {
                                 viewModel.createUser(
                                     login = login,
@@ -66,29 +85,22 @@ class SignUpFragment : Fragment() {
                                 )
                             }
                             CoroutineScope(Dispatchers.Main).launch {
-                                Toast.makeText(requireContext(), "Аккаунт успешно создан!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Аккаунт успешно создан!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                             findNavController().popBackStack()
                         } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Неправильный формат почты!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            binding?.tiMail?.error = "Неправильный формат почты!"
                         }
-
                     } else {
-                        Toast.makeText(requireContext(), "Пароли не совпадают!", Toast.LENGTH_SHORT)
-                            .show()
+                        binding?.tiPassword2?.error = "Пароли не совпадают!"
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Пароль должен содержать минимум 6 символов!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding?.tiPassword?.error = "Пароль должен содержать минимум 6 символов!"
                 }
-
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -97,13 +109,106 @@ class SignUpFragment : Fragment() {
                 ).show()
             }
         }
+
+        val etLogin = binding?.etLogin
+        etLogin?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                binding?.etPassword?.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+        val etPassword = binding?.etPassword
+        etPassword?.apply {
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding?.tiPassword?.error = null
+                }
+            }
+
+            setOnEditorActionListener { _, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    binding?.etPassword2?.requestFocus()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+
+        val etPassword2 = binding?.etPassword2
+        etPassword2?.apply {
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding?.tiPassword2?.error = null
+                }
+            }
+            setOnEditorActionListener { _, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    binding?.etMail?.requestFocus()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+
+        val etMail = binding?.etMail
+        etMail?.apply {
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding?.tiMail?.error = null
+                }
+            }
+            setOnEditorActionListener { _, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    binding?.etFamily?.requestFocus()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+
+        val etFamily = binding?.etFamily
+        etFamily?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                binding?.etName?.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+        val etName = binding?.etName
+        etName?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_NEXT || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                binding?.etLastname?.requestFocus()
+                true
+            } else {
+                false
+            }
+        }
+
+        val etLastname = binding?.etLastname
+        etLastname?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                val action = getSystemService(requireContext(), InputMethodManager::class.java)
+                action?.hideSoftInputFromWindow(etLastname.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
+
     }
 
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
