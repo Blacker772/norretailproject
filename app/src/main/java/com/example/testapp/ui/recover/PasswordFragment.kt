@@ -13,19 +13,24 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PasswordFragment : Fragment() {
 
-    private lateinit var binding: FragmentPasswordBinding
+    private var binding: FragmentPasswordBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentPasswordBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btSave.setOnClickListener {
+        binding?.btSave?.setOnClickListener {
             Toast.makeText(requireContext(), "Пароль успешно изменен!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

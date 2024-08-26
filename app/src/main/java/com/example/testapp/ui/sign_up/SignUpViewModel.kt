@@ -4,38 +4,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.response.ApiService
+import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val apiService: ApiService
+    private val repository: Repository
 ) : ViewModel() {
 
-    val liveData = MutableLiveData<CreateUserModel>()
 
     suspend fun createUser(
-        login: String,
-        password: String,
-        family: String,
-        name: String,
-        lastname: String,
-        email: String
+        login: String, password: String, family: String,
+        name: String, lastname: String, email: String
     ) {
-        val result = apiService.createUser(
+        repository.createUSerRepo(
             CreateUserModel(
-            login = login,
-            password = password,
-            family = family,
-            name = name,
-            lastname = lastname,
-            email = email
+                login, password, family, name, lastname, email
+            )
         )
-        )
-
-        if (result.isSuccessful){
-            liveData.postValue(result.body())
-        }
     }
-
 }

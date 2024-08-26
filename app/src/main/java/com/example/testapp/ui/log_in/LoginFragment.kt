@@ -20,21 +20,17 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
+    private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.apply {
+        binding?.apply {
             btSignUp.setOnClickListener {
                 navigate(R.id.action_loginFragment_to_signUpFragment)
             }
@@ -43,8 +39,8 @@ class LoginFragment : Fragment() {
             }
 
             btEnter.setOnClickListener {
-                val login = binding.etLoginText.text.toString()
-                val password = binding.etPasswordText.text.toString()
+                val login = binding?.etLoginText?.text.toString()
+                val password = binding?.etPasswordText?.text.toString()
 
                 if (login.isNotEmpty() && password.isNotEmpty()) {
                     lifecycleScope.launch {
@@ -64,16 +60,16 @@ class LoginFragment : Fragment() {
     private fun onChangeState(state: UiState) {
         when (state) {
             is UiState.Loading -> {
-                binding.progressBar.isVisible = state.isLoading
+                binding?.progressBar?.isVisible = state.isLoading
             }
 
             is UiState.Error -> {
                 Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                binding.progressBar.isVisible = state.isLoading
+                binding?.progressBar?.isVisible = state.isLoading
             }
 
             is UiState.Data -> {
-                binding.progressBar.isVisible = state.isLoading
+                binding?.progressBar?.isVisible = state.isLoading
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, ViewPagerFragment())
                     .commit()
@@ -85,5 +81,10 @@ class LoginFragment : Fragment() {
 
     private fun navigate(id: Int) {
         findNavController().navigate(id)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

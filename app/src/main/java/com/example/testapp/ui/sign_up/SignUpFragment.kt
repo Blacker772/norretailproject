@@ -19,29 +19,29 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignUpBinding
+    private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btBack.setOnClickListener {
+        binding?.btBack?.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.btRegisterUser.setOnClickListener {
-            val login = binding.etLogin.text.toString()
-            val password = binding.etPassword.text.toString()
-            val checkPassword = binding.etPassword2.text.toString()
-            val family = binding.etFamily.text.toString()
-            val name = binding.etName.text.toString()
-            val lastname = binding.etLastname.text.toString()
-            val email = binding.etMail.text.toString()
+        binding?.btRegisterUser?.setOnClickListener {
+            val login = binding?.etLogin?.text.toString()
+            val password = binding?.etPassword?.text.toString()
+            val checkPassword = binding?.etPassword2?.text.toString()
+            val family = binding?.etFamily?.text.toString()
+            val name = binding?.etName?.text.toString()
+            val lastname = binding?.etLastname?.text.toString()
+            val email = binding?.etMail?.text.toString()
 
             if (login.isNotEmpty()
                 && password.isNotEmpty()
@@ -102,6 +102,11 @@ class SignUpFragment : Fragment() {
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
 

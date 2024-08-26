@@ -13,19 +13,24 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SentCodeFragment : Fragment() {
 
-    private lateinit var binding: FragmentSentCodeBinding
+    private var binding: FragmentSentCodeBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSentCodeBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btApply.setOnClickListener {
+        binding?.btApply?.setOnClickListener {
             findNavController().navigate(R.id.action_sentCodeFragment_to_passwordFragment)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

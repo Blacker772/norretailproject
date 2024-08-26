@@ -17,6 +17,6 @@ interface DAO {
     suspend fun insertUser(data: Users)
 
     @Query("SELECT * FROM users WHERE login = :login")
-    suspend fun getUserByLogin(login: String):Users
+    suspend fun getUserByLogin(login: String): Users
 
 }

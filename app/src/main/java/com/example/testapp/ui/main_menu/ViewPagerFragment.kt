@@ -19,43 +19,43 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ViewPagerFragment : Fragment() {
 
-    private lateinit var binding: FragmentViewpagerBinding
+    private var binding: FragmentViewpagerBinding? = null
     private val adapter = HeaderAdapter()
     private val viewModel by viewModels<VPViewModel>()
-    private lateinit var header: View
+    private var header: View? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentViewpagerBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRV()
         adapter.updateAddressList(listOfButton())
-        binding.btMenu.setOnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+        binding?.btMenu?.setOnClickListener {
+            binding?.drawerLayout?.openDrawer(GravityCompat.START)
         }
 
         //Создание адаптера
         val vpAdapter = ViewPagerAdapter(childFragmentManager, lifecycle)
 
         //привязка адаптера к viewPager2
-        binding.viewPager2.adapter = vpAdapter
+        binding?.viewPager2?.adapter = vpAdapter
 
 
         //синхронизация меню с перелистыванием фрагментов
-        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding?.viewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                binding.bottomNavigation.menu.children.forEachIndexed { index, _ ->
-                    binding.bottomNavigation.menu.getItem(position).setChecked(index == position)
+                binding?.bottomNavigation?.menu?.children?.forEachIndexed { index, _ ->
+                    binding?.bottomNavigation?.menu?.getItem(position)?.setChecked(index == position)
                 }
             }
         })
 
         //нижнее меню приложения
-        binding.bottomNavigation.setOnItemSelectedListener {item ->
+        binding?.bottomNavigation?.setOnItemSelectedListener {item ->
             when(item.itemId){
                 R.id.routeFragment -> {
                     changePosition(0)
@@ -78,14 +78,14 @@ class ViewPagerFragment : Fragment() {
 
     //перелистывание фрагментов
     private fun changePosition(position: Int) {
-        binding.viewPager2.setCurrentItem(position,true)
+        binding?.viewPager2?.setCurrentItem(position,true)
     }
 
     private fun initRV() {
-        header = binding.navigationView.getHeaderView(0)
-        val rvList = header.findViewById<RecyclerView>(R.id.rvListButton)
-        rvList.adapter = adapter
-        rvList.layoutManager = LinearLayoutManager(
+        header = binding?.navigationView?.getHeaderView(0)
+        val rvList = header?.findViewById<RecyclerView>(R.id.rvListButton)
+        rvList?.adapter = adapter
+        rvList?.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
             false
@@ -99,4 +99,9 @@ class ViewPagerFragment : Fragment() {
         ButtonModel(R.drawable.ic_manual, "Справочники"),
         ButtonModel(R.drawable.ic_setting1, "Настройки")
     )
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 }
