@@ -1,7 +1,6 @@
 package com.example.testapp.di
 
 import android.content.Context
-import androidx.room.Dao
 import androidx.room.Room
 import com.example.testapp.data.database.AppDatabase
 import com.example.testapp.data.database.DAO

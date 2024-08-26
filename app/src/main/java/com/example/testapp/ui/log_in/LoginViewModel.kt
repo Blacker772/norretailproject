@@ -1,12 +1,7 @@
 package com.example.testapp.ui.log_in
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testapp.data.auth.AuthModel
-import com.example.testapp.data.auth.UserModel
-import com.example.testapp.data.response.ApiService
 import com.example.testapp.repository.Repository
 import com.example.testapp.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
