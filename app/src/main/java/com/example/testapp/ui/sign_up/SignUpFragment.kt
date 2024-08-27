@@ -1,14 +1,7 @@
 package com.example.testapp.ui.sign_up
 
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,15 +11,14 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.widget.addTextChangedListener
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentSignUpBinding
+import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -83,15 +75,18 @@ class SignUpFragment : Fragment() {
                                     lastname = lastname,
                                     email = email
                                 )
+                                viewModel.state.collect{
+                                    onChangeState(it)
+                                }
                             }
-                            CoroutineScope(Dispatchers.Main).launch {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Аккаунт успешно создан!",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            findNavController().popBackStack()
+//                            CoroutineScope(Dispatchers.Main).launch {
+//                                Toast.makeText(
+//                                    requireContext(),
+//                                    "Аккаунт успешно создан!",
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                            findNavController().popBackStack()
                         } else {
                             binding?.tiMail?.error = "Неправильный формат почты!"
                         }
@@ -202,9 +197,29 @@ class SignUpFragment : Fragment() {
                 false
             }
         }
-
     }
 
+    private fun onChangeState(state: UiStateSignUp) {
+        when (state) {
+            is UiStateSignUp.Loading -> {
+                binding?.progressBar?.isVisible = state.isLoading
+            }
+
+            is UiStateSignUp.Error -> {
+                Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                binding?.progressBar?.isVisible = state.isLoading
+            }
+
+            is UiStateSignUp.Data -> {
+                binding?.progressBar?.isVisible = state.isLoading
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, ViewPagerFragment())
+                    .commit()
+            }
+
+            else -> {}
+        }
+    }
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()

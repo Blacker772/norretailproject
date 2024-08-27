@@ -3,6 +3,7 @@ package com.example.testapp.repository
 import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.auth.UserModel
 import com.example.testapp.data.createuser.CreateUserModel
+import com.example.testapp.data.createuser.ErrorCreateUser
 import com.example.testapp.data.response.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,12 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun createUSerRepo(user: CreateUserModel){
-        apiService.createUser(user)
+    suspend fun createUSerRepo(user: CreateUserModel): Flow<ErrorCreateUser> = flow{
+        val result = apiService.createUser(user)
+        if (result.isSuccessful){
+            result.body()?.let { emit(it) } ?: throw Exception("Response is null")
+        }else{
+            throw Exception("${result.code()}")
+        }
     }
 }

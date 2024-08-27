@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentLoginBinding
-import com.example.testapp.ui.UiState
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -57,18 +56,18 @@ class LoginFragment : Fragment() {
     }
 
     //Метод, обрабатывающий состояния UiState
-    private fun onChangeState(state: UiState) {
+    private fun onChangeState(state: UiStateLogIn) {
         when (state) {
-            is UiState.Loading -> {
+            is UiStateLogIn.Loading -> {
                 binding?.progressBar?.isVisible = state.isLoading
             }
 
-            is UiState.Error -> {
+            is UiStateLogIn.Error -> {
                 Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
                 binding?.progressBar?.isVisible = state.isLoading
             }
 
-            is UiState.Data -> {
+            is UiStateLogIn.Data -> {
                 binding?.progressBar?.isVisible = state.isLoading
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, ViewPagerFragment())
