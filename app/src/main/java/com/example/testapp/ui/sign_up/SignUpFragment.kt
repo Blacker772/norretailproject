@@ -79,14 +79,6 @@ class SignUpFragment : Fragment() {
                                     onChangeState(it)
                                 }
                             }
-//                            CoroutineScope(Dispatchers.Main).launch {
-//                                Toast.makeText(
-//                                    requireContext(),
-//                                    "Аккаунт успешно создан!",
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                            }
-//                            findNavController().popBackStack()
                         } else {
                             binding?.tiMail?.error = "Неправильный формат почты!"
                         }
