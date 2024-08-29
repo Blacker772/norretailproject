@@ -2,6 +2,7 @@ package com.example.testapp.ui.sign_up
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentSignUpBinding
+import com.example.testapp.ui.log_in.LoginFragment
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -204,14 +206,18 @@ class SignUpFragment : Fragment() {
 
             is UiStateSignUp.Data -> {
                 binding?.progressBar?.isVisible = state.isLoading
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, ViewPagerFragment())
-                    .commit()
+                action(LoginFragment())
             }
 
             else -> {}
         }
     }
+    private fun action(fragment: Fragment){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
+    }
+
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()

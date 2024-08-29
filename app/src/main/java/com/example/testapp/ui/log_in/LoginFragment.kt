@@ -11,9 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
+import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -22,13 +26,24 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                onChangeState(it)
+            }
+        }
+
         binding?.apply {
             btSignUp.setOnClickListener {
                 navigate(R.id.action_loginFragment_to_signUpFragment)
@@ -41,15 +56,32 @@ class LoginFragment : Fragment() {
                 val login = binding?.etLoginText?.text.toString()
                 val password = binding?.etPasswordText?.text.toString()
 
-                if (login.isNotEmpty() && password.isNotEmpty()) {
-                    lifecycleScope.launch {
-                        viewModel.getLogin(login, password)
-                        viewModel.state.collect {
-                            onChangeState(it)
+                if (login.isNotEmpty()) {
+                    if (password.isNotEmpty()) {
+                        lifecycleScope.launch {
+                            viewModel.getLogin(login, password)
                         }
+                        CoroutineScope(Dispatchers.Main).launch {
+                            Toast.makeText(requireContext(), "Ваш аккаунт успешно создан", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        binding?.tiPassword?.error = "Введите пароль!"
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Введите данные!", Toast.LENGTH_SHORT).show()
+                    binding?.tiLogin?.error = "Введите логин!"
+                }
+            }
+        }
+
+        binding?.apply {
+            etLoginText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding?.tiLogin?.error = null
+                }
+            }
+            etPasswordText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding?.tiPassword?.error = null
                 }
             }
         }
@@ -69,17 +101,23 @@ class LoginFragment : Fragment() {
 
             is UiStateLogIn.Data -> {
                 binding?.progressBar?.isVisible = state.isLoading
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, ViewPagerFragment())
-                    .commit()
+                action(ViewPagerFragment())
             }
 
-            else -> {}
+            else -> {
+                binding?.progressBar?.isVisible = false
+            }
         }
     }
 
     private fun navigate(id: Int) {
         findNavController().navigate(id)
+    }
+
+    private fun action(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
     override fun onDestroyView() {

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -19,16 +20,17 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow<UiStateLogIn>(UiStateLogIn.None)
     val state: StateFlow<UiStateLogIn> get() = _state
 
-    fun getLogin(login: String, password: String){
+    fun getLogin(login: String, password: String) {
         viewModelScope.launch {
             repository.getLoginRepo(login, password)
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
+                    delay(2000)
                 }
                 .catch { e ->
                     _state.value = UiStateLogIn.Error(e.message, false)
                 }
-                .collect{
+                .collect {
                     _state.value = UiStateLogIn.Data(it, false)
                 }
         }

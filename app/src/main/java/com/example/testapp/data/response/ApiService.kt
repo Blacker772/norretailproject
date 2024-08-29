@@ -1,5 +1,6 @@
 package com.example.testapp.data.response
 
+import com.example.testapp.data.MailModel
 import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.auth.UserModel
@@ -22,4 +23,8 @@ interface ApiService {
     //регистрация пользователя
     @POST("/users")
     suspend fun createUser(@Body user: CreateUserModel): Response<ErrorCreateUser>
+
+    //проверка почты(имеется ли такая почта на базе)
+    @GET("/user/find/email")
+    suspend fun checkMail(@Body mail: MailModel): Response<CreateUserModel>
 }

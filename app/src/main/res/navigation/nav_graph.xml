@@ -41,9 +41,9 @@
         tools:layout="@layout/fragment_viewpager" />
     <fragment
         android:id="@+id/recoverFragment"
-        android:name="com.example.testapp.ui.recover.MailFragment"
+        android:name="com.example.testapp.ui.recover.mail.MailFragment"
         android:label="fragment_recover"
-        tools:layout="@layout/fragment_recover" >
+        tools:layout="@layout/fragment_mail" >
         <action
             android:id="@+id/action_recoverFragment_to_sentCodeFragment"
             app:destination="@id/sentCodeFragment"
@@ -54,14 +54,14 @@
     </fragment>
     <fragment
         android:id="@+id/passwordFragment"
-        android:name="com.example.testapp.ui.recover.PasswordFragment"
+        android:name="com.example.testapp.ui.recover.password.PasswordFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_password" />
     <fragment
         android:id="@+id/sentCodeFragment"
-        android:name="com.example.testapp.ui.recover.SentCodeFragment"
+        android:name="com.example.testapp.ui.recover.otpcode.OTPCodeFragment"
         android:label="fragment_sent_code"
-        tools:layout="@layout/fragment_sent_code" >
+        tools:layout="@layout/fragment_otp_code" >
         <action
             android:id="@+id/action_sentCodeFragment_to_passwordFragment"
             app:destination="@id/passwordFragment"
