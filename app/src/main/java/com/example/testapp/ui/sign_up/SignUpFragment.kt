@@ -30,11 +30,7 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -57,8 +53,8 @@ class SignUpFragment : Fragment() {
 
             fun onSubmit() {
                 if (validateInputs(login, password, checkPassword, email, family, name, lastname)) {
+                    viewModel.createUser(login, password, family, name, lastname, email)
                     lifecycleScope.launch {
-                        viewModel.createUser(login, password, family, name, lastname, email)
                         viewModel.state.collect {
                             onChangeState(it)
                         }
@@ -83,8 +79,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun setupEditorAction(
-        editText: EditText?,
-        nextFocusView: View?,
+        editText: EditText?, nextFocusView: View?,
         actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT
     ) {
         editText?.setOnEditorActionListener { _, actionId, event ->
@@ -120,14 +115,9 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun validateInputs(
-        login: String,
-        password: String,
-        checkPassword: String,
-        email: String,
-        family: String,
-        name: String,
-        lastname: String
+    private fun validateInputs(login: String, password: String,
+        checkPassword: String, email: String,
+        family: String, name: String, lastname: String
     ): Boolean {
         return when {
             login.isEmpty() -> showToast("Логин не может быть пустым")

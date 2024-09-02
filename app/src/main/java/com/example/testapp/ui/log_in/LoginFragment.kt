@@ -11,13 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
-import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -71,9 +69,7 @@ class LoginFragment : Fragment() {
                     binding?.tiLogin?.error = "Введите логин!"
                 }
             }
-        }
 
-        binding?.apply {
             etLoginText.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     binding?.tiLogin?.error = null
@@ -93,17 +89,14 @@ class LoginFragment : Fragment() {
             is UiStateLogIn.Loading -> {
                 binding?.progressBar?.isVisible = state.isLoading
             }
-
             is UiStateLogIn.Error -> {
                 Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
                 binding?.progressBar?.isVisible = state.isLoading
             }
-
             is UiStateLogIn.Data -> {
                 binding?.progressBar?.isVisible = state.isLoading
                 action(ViewPagerFragment())
             }
-
             else -> {
                 binding?.progressBar?.isVisible = false
             }

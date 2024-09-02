@@ -15,4 +15,8 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="MyHintTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">16sp</item> <!-- Размер текста для Hint -->
+        <item name="android:textColor">@color/black</item> <!-- Цвет текста для Hint -->
+    </style>
 </resources>
