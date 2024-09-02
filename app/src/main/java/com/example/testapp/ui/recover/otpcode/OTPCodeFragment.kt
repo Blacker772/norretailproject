@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
-import com.example.testapp.databinding.FragmentSentCodeBinding
+import com.example.testapp.databinding.FragmentOtpCodeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OTPCodeFragment : Fragment() {
 
-    private var binding: FragmentSentCodeBinding? = null
+    private var binding: FragmentOtpCodeBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentSentCodeBinding.inflate(inflater, container, false)
+        binding = FragmentOtpCodeBinding.inflate(inflater, container, false)
         return binding?.root
     }
 

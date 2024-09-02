@@ -3,10 +3,9 @@ package com.example.testapp.ui.recover.mail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.testapp.data.MailModel
+import com.example.testapp.data.recover.MailModel
 import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.response.ApiService
-import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 class MailViewModel @Inject constructor(

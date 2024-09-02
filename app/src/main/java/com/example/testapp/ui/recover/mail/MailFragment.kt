@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentMailBinding
-import com.example.testapp.databinding.FragmentRecoverBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -28,9 +27,7 @@ class MailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.state.observe(viewLifecycleOwner){
-
-        }
+        viewModel.state.observe(viewLifecycleOwner){}
 
         binding?.btSent?.setOnClickListener{
             val mail = binding?.etMail?.text.toString()

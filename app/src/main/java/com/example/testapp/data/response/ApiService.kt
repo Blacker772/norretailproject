@@ -1,6 +1,6 @@
 package com.example.testapp.data.response
 
-import com.example.testapp.data.MailModel
+import com.example.testapp.data.recover.MailModel
 import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.auth.UserModel
