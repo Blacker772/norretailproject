@@ -49,19 +49,19 @@ class SignUpFragment : Fragment() {
         binding?.btRegisterUser?.setOnClickListener {
             val login = binding?.etLogin?.text.toString()
             val password = binding?.etPassword?.text.toString()
-            val checkPassword = binding?.etPassword2?.text.toString()
+            val checkPassword = binding?.etPasswordCheck?.text.toString()
             val family = binding?.etFamily?.text.toString()
             val name = binding?.etName?.text.toString()
             val lastname = binding?.etLastname?.text.toString()
             val email = binding?.etMail?.text.toString()
 
-            fun onSubmit(){
-                if (validateInputs(login, password, checkPassword, email, family, name, lastname)){
+            fun onSubmit() {
+                if (validateInputs(login, password, checkPassword, email, family, name, lastname)) {
                     lifecycleScope.launch {
                         viewModel.createUser(login, password, family, name, lastname, email)
-                         viewModel.state.collect {
-                             onChangeState(it)
-                         }
+                        viewModel.state.collect {
+                            onChangeState(it)
+                        }
                     }
                 }
             }
@@ -70,29 +70,23 @@ class SignUpFragment : Fragment() {
 
         binding?.apply {
             setupEditorAction(etLogin, etPassword)
-            setupEditorAction(etPassword, etPassword2)
-            setupEditorAction(etPassword2, etMail)
+            setupEditorAction(etPassword, etPasswordCheck)
+            setupEditorAction(etPasswordCheck, etMail)
             setupEditorAction(etMail, etFamily)
             setupEditorAction(etFamily, etName)
             setupEditorAction(etName, etLastname)
-
-            etLastname.setOnEditorActionListener { _, actionId, event ->
-                if (actionId == EditorInfo.IME_ACTION_DONE || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    val imm = getSystemService(requireContext(), InputMethodManager::class.java)
-                    imm?.hideSoftInputFromWindow(etLastname.windowToken, 0)
-                    true
-                } else {
-                    false
-                }
-            }
-
+            setupCloseKeyboard(etLastname)
             setupFocusChange(etPassword, tiPassword)
-            setupFocusChange(etPassword2, tiPassword2)
+            setupFocusChange(etPasswordCheck, tiPassword2)
             setupFocusChange(etMail, tiMail)
         }
     }
 
-    private fun setupEditorAction(editText: EditText?, nextFocusView: View?, actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT) {
+    private fun setupEditorAction(
+        editText: EditText?,
+        nextFocusView: View?,
+        actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT
+    ) {
         editText?.setOnEditorActionListener { _, actionId, event ->
             if (actionId == actionIdToHandle || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
                 nextFocusView?.requestFocus()
@@ -102,6 +96,7 @@ class SignUpFragment : Fragment() {
             }
         }
     }
+
     private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
         editText?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -109,6 +104,22 @@ class SignUpFragment : Fragment() {
             }
         }
     }
+
+    private fun setupCloseKeyboard(
+        editText: EditText?,
+        actionIdToHandle: Int = EditorInfo.IME_ACTION_DONE
+    ) {
+        editText?.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == actionIdToHandle || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
+                val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+                imm?.hideSoftInputFromWindow(editText.windowToken, 0)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
     private fun validateInputs(
         login: String,
         password: String,
@@ -130,21 +141,26 @@ class SignUpFragment : Fragment() {
                 binding?.tiPassword?.error = "Пароль должен содержать минимум 6 символов!"
                 false
             }
+
             password != checkPassword -> {
                 binding?.tiPassword2?.error = "Пароли не совпадают!"
                 false
             }
+
             !email.isEmailValid() -> {
                 binding?.tiMail?.error = "Неправильный формат почты!"
                 false
             }
+
             else -> true
         }
     }
+
     private fun showToast(message: String): Boolean {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         return false
     }
+
     private fun onChangeState(state: UiStateSignUp) {
         when (state) {
             is UiStateSignUp.Loading -> {
@@ -166,18 +182,20 @@ class SignUpFragment : Fragment() {
             }
         }
     }
+
     private fun action(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
     }
+
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
 }
-

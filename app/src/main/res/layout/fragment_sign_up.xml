@@ -123,7 +123,7 @@
         android:imeOptions="actionNext">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword2"
+            android:id="@+id/etPasswordCheck"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
