@@ -8,7 +8,6 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface ApiService {
     //каналы сбыта
@@ -27,6 +26,4 @@ interface ApiService {
     @GET("/user/find/email")
     suspend fun checkMail(mail: String): Response<CreateUserModel>
 
-//    @HTTP(method = "GET", path = "user/find/email", hasBody = true)
-//    suspend fun checkMail(@Body mail: MailModel): Response<CreateUserModel>
 }

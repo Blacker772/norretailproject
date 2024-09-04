@@ -1,10 +1,10 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
     base
     `project-report`
+    kotlin("kapt")
 }
 
 android {
@@ -77,32 +77,47 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    //Android Core
+    val core = "1.13.1"
+    implementation("androidx.core:core-ktx:$core")
+
+    //App Combat
+    val appCombat = "1.7.0"
+    implementation("androidx.appcompat:appcompat:$appCombat")
+
+    //MaterialDesign
+    val material = "1.12.0"
+    implementation("com.google.android.material:material:$material")
+
+    //ConstraintLayout
+    val constraint = "2.1.4"
+    implementation("androidx.constraintlayout:constraintlayout:$constraint")
 
     //Okhttp
     val okhttpVersion = "4.12.0"
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
 
     //Coil
-    implementation("io.coil-kt:coil:2.6.0")
+    val coil = "2.6.0"
+    implementation("io.coil-kt:coil:$coil")
 
     //Testing
-    testImplementation("junit:junit:4.13.2")
+    val testing = "4.13.2"
+    testImplementation("junit:junit:$testing")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
     //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.46.1")  //2.46.1
-    kapt("com.google.dagger:hilt-android-compiler:2.46.1")
+    val dagger = "2.46.1"
+    implementation("com.google.dagger:hilt-android:$dagger")
+    kapt("com.google.dagger:hilt-android-compiler:$dagger")
 
     //Refresh Layout
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    val refresh = "1.1.0"
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$refresh")
 
+    //LottieAnimation
     val lottieVersion = "6.4.1"
     implementation("com.airbnb.android:lottie:$lottieVersion")
-    implementation("com.google.android.material:material:1.12.0")
 }

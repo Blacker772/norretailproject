@@ -65,11 +65,4 @@ object NetworkModule {
     fun providesApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
-
-    @Singleton
-    @Provides
-    fun provideRequestBody(mailModel: MailModel): RequestBody {
-        val jsonBody = Gson().toJson(mailModel)
-        return jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
-    }
 }

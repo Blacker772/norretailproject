@@ -12,20 +12,20 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val apiService: ApiService
 ) {
-    suspend fun getLoginRepo(login: String, password: String): Flow<UserModel> = flow {
+    fun getLoginRepo(login: String, password: String): Flow<UserModel> = flow {
         val result = apiService.getLogin(AuthModel(login, password))
-        if (result.isSuccessful){
+        if (result.isSuccessful) {
             result.body()?.let { emit(it) } ?: throw Exception("Response is null")
         } else {
-            throw  Exception("Error ${result.code()}")
+            throw Exception("Error ${result.code()}")
         }
     }
 
-    suspend fun createUSerRepo(user: CreateUserModel): Flow<ErrorCreateUser> = flow{
+    fun createUSerRepo(user: CreateUserModel): Flow<ErrorCreateUser> = flow {
         val result = apiService.createUser(user)
-        if (result.isSuccessful){
+        if (result.isSuccessful) {
             result.body()?.let { emit(it) } ?: throw Exception("Response is null")
-        }else{
+        } else {
             throw Exception("${result.code()}")
         }
     }
