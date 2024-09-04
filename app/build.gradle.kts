@@ -99,7 +99,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
 
     //Coil
-    val coil = "2.6.0"
+    val coil = "2.7.0"
     implementation("io.coil-kt:coil:$coil")
 
     //Testing
@@ -118,6 +118,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$refresh")
 
     //LottieAnimation
-    val lottieVersion = "6.4.1"
+    val lottieVersion = "6.5.2"
     implementation("com.airbnb.android:lottie:$lottieVersion")
 }
