@@ -19,4 +19,25 @@
         <item name="android:textSize">16sp</item> <!-- Размер текста для Hint -->
         <item name="android:textColor">@color/black</item> <!-- Цвет текста для Hint -->
     </style>
+
+
+    <!-- Стиль для TextInputLayout -->
+    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="boxStrokeColor">@color/blue</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextColor">@color/black</item>
+        <item name="hintTextAppearance">@style/MyHintTextStyle</item>
+    </style>
+
+    <!-- Стиль для TextInputEditText -->
+    <style name="CustomTextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
 </resources>

@@ -2,11 +2,16 @@ package com.example.testapp.di
 
 import com.example.testapp.data.response.ApiService
 import com.example.testapp.Constants
+import com.example.testapp.data.recover.MailModel
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -59,5 +64,12 @@ object NetworkModule {
     @Provides
     fun providesApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRequestBody(mailModel: MailModel): RequestBody {
+        val jsonBody = Gson().toJson(mailModel)
+        return jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
     }
 }

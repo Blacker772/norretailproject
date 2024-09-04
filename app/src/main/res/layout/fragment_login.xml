@@ -22,54 +22,33 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:hint="@string/Mail"
         app:layout_constraintBottom_toTopOf="@id/tiPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sivImage"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLoginText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_login"
-            android:drawablePadding="10dp"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiLogin"
         app:passwordToggleEnabled="true"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPasswordText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
             android:inputType="textPassword"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox

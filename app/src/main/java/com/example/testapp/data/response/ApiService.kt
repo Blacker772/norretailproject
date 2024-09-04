@@ -1,6 +1,4 @@
 package com.example.testapp.data.response
-
-import com.example.testapp.data.recover.MailModel
 import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.auth.UserModel
@@ -10,6 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
     //каналы сбыта
@@ -24,7 +23,10 @@ interface ApiService {
     @POST("/users")
     suspend fun createUser(@Body user: CreateUserModel): Response<ErrorCreateUser>
 
-    //проверка почты(имеется ли такая почта на базе)
+    //проверка почты(имеется ли такая почта на сервере)
     @GET("/user/find/email")
-    suspend fun checkMail(@Body mail: MailModel): Response<CreateUserModel>
+    suspend fun checkMail(mail: String): Response<CreateUserModel>
+
+//    @HTTP(method = "GET", path = "user/find/email", hasBody = true)
+//    suspend fun checkMail(@Body mail: MailModel): Response<CreateUserModel>
 }

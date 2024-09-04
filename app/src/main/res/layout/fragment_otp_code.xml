@@ -5,26 +5,20 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.recover.otpcode.OTPCodeFragment"
-    android:padding="20dp"
-    android:background="@color/white">
+    android:padding="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/tiOTP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btApply"
         android:hint="@string/Code"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:id="@+id/etOTP"
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

@@ -55,35 +55,24 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="10dp"
         android:hint="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar"
-        android:layout_marginHorizontal="10dp"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLogin"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_login"
-            android:drawablePadding="10dp"
             android:imeOptions="actionNext"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,28 +80,19 @@
         app:layout_constraintTop_toBottomOf="@id/tiLogin"
         android:layout_marginHorizontal="10dp"
         app:passwordToggleEnabled="true"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:imeOptions="actionNext"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPassword2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/apply_pass"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,131 +100,88 @@
         app:layout_constraintTop_toBottomOf="@id/tiPassword"
         android:layout_marginHorizontal="10dp"
         app:passwordToggleEnabled="true"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPasswordCheck"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_password"
-            android:drawablePadding="10dp"
             android:inputType="textPassword"
             android:imeOptions="actionNext"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/Mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiPassword2"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_mail"
-            android:drawablePadding="10dp"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiSurname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/Surname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiMail"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etFamily"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_family"
-            android:drawablePadding="10dp"
             android:imeOptions="actionNext"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiSurname"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionNext"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_name"
-            android:drawablePadding="10dp"
             android:imeOptions="actionNext"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPatronymic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="@string/Patronymic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiName"
         android:layout_marginHorizontal="10dp"
-        android:background="@color/white"
-        app:boxStrokeColor="@color/blue"
-        app:boxStrokeWidth="1dp"
-        app:hintTextColor="@color/black"
         android:imeOptions="actionDone"
-        app:hintTextAppearance="@style/MyHintTextStyle">
+        style="@style/CustomTextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLastname"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:drawableStart="@drawable/ic_lastname"
-            android:drawablePadding="10dp"
             android:imeOptions="actionDone"
-            android:textSize="16sp"/>
+            style="@style/CustomTextInputEditText"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
