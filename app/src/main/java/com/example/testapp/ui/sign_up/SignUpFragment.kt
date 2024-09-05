@@ -38,32 +38,6 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.btBack?.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding?.btRegisterUser?.setOnClickListener {
-            val login = binding?.etLogin?.text.toString()
-            val password = binding?.etPassword?.text.toString()
-            val checkPassword = binding?.etPasswordCheck?.text.toString()
-            val family = binding?.etFamily?.text.toString()
-            val name = binding?.etName?.text.toString()
-            val lastname = binding?.etLastname?.text.toString()
-            val email = binding?.etMail?.text.toString()
-
-            fun onSubmit() {
-                if (validateInputs(login, password, checkPassword, email, family, name, lastname)) {
-                    viewModel.createUser(login, password, family, name, lastname, email)
-                    lifecycleScope.launch {
-                        viewModel.state.collect {
-                            onChangeState(it)
-                        }
-                    }
-                }
-            }
-            onSubmit()
-        }
-
         binding?.apply {
             setupEditorAction(etLogin, etPassword)
             setupEditorAction(etPassword, etPasswordCheck)
@@ -75,6 +49,32 @@ class SignUpFragment : Fragment() {
             setupFocusChange(etPassword, tiPassword)
             setupFocusChange(etPasswordCheck, tiPassword2)
             setupFocusChange(etMail, tiMail)
+
+            btRegisterUser.setOnClickListener {
+                val login = binding?.etLogin?.text.toString()
+                val password = binding?.etPassword?.text.toString()
+                val checkPassword = binding?.etPasswordCheck?.text.toString()
+                val family = binding?.etFamily?.text.toString()
+                val name = binding?.etName?.text.toString()
+                val lastname = binding?.etLastname?.text.toString()
+                val email = binding?.etMail?.text.toString()
+
+                fun onSubmit() {
+                    if (validateInputs(login, password, checkPassword, email, family, name, lastname)) {
+                        viewModel.createUser(login, password, family, name, lastname, email)
+                        lifecycleScope.launch {
+                            viewModel.state.collect {
+                                onChangeState(it)
+                            }
+                        }
+                    }
+                }
+                onSubmit()
+            }
+
+            btBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -168,7 +168,7 @@ class SignUpFragment : Fragment() {
             }
 
             else -> {
-                Log.w("SignUpFragment", "Unexpected state: $state")
+                binding?.progressBar?.isVisible = false
             }
         }
     }

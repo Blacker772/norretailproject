@@ -26,5 +26,4 @@ object DatabaseModule {
     fun providesDAO(appDatabase: AppDatabase): DAO{
         return appDatabase.getDao()
     }
-
 }

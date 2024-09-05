@@ -42,6 +42,15 @@ android {
     }
 
 }
+
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.hilt.android.internal.disableAndroidSuperclassValidation", "true")
+        arg("dagger.hilt.android.internal.projectType", "APP")
+    }
+}
+
 base {
     archivesName.set("gradle")
     distsDirectory.set(layout.buildDirectory.dir("custom-dist"))
@@ -60,7 +69,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     //Navigation
-    val navVersion = "2.7.7"
+    val navVersion = "2.8.0"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
@@ -110,7 +119,9 @@ dependencies {
 
     //Dagger Hilt
     val dagger = "2.46.1"
+    //noinspection GradleDependency
     implementation("com.google.dagger:hilt-android:$dagger")
+    //noinspection GradleDependency
     kapt("com.google.dagger:hilt-android-compiler:$dagger")
 
     //Refresh Layout

@@ -14,8 +14,6 @@ import com.example.testapp.R
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,7 +33,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         lifecycleScope.launch {
             viewModel.state.collect {
                 onChangeState(it)
@@ -59,9 +57,6 @@ class LoginFragment : Fragment() {
                         lifecycleScope.launch {
                             viewModel.getLogin(login, password)
                         }
-                        CoroutineScope(Dispatchers.Main).launch {
-                            Toast.makeText(requireContext(), "Ваш аккаунт успешно создан", Toast.LENGTH_SHORT).show()
-                        }
                     } else {
                         binding?.tiPassword?.error = "Введите пароль!"
                     }
@@ -81,6 +76,7 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+        
     }
 
     //Метод, обрабатывающий состояния UiState
