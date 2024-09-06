@@ -2,6 +2,7 @@ package com.example.testapp.ui.log_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -33,6 +34,12 @@ class LoginViewModel @Inject constructor(
                 .collect {
                     _state.value = UiStateLogIn.Data(it, false)
                 }
+        }
+    }
+
+    fun saveUser(user: SaveUser) {
+        viewModelScope.launch {
+            repository.saveUser(user)
         }
     }
 }

@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Auth_data")
-data class AuthData(
+@Entity(tableName = "auth_data")
+data class SaveUser(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int?,

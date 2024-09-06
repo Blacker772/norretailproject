@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -12,8 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentMailBinding
-import com.example.testapp.ui.log_in.UiStateLogIn
-import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -38,18 +38,30 @@ class MailFragment : Fragment() {
             }
         }
 
-        binding?.btSent?.setOnClickListener{
-            val mail = binding?.etMail?.text.toString()
-            if (mail.isNotEmpty()){
-                lifecycleScope.launch {
-                    viewModel.checkMail(mail)
+        binding?.apply {
+            btSent.setOnClickListener{
+                val mail = binding?.etMail?.text.toString()
+                if (mail.isNotEmpty()){
+                    lifecycleScope.launch {
+                        viewModel.checkMail(mail)
+                    }
+                }else{
+                    binding?.tiMail?.error = "Введите почту!"
                 }
-            }else{
-                binding?.tiMail?.error = "Введите почту!"
+
+            }
+            setupFocusChange(etMail, tiMail)
+        }
+    }
+
+    private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
+        editText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                textInputLayout?.error = null
             }
         }
     }
-    
+
     //Метод, обрабатывающий состояния UiState
     private fun onChangeState(state: UiStateMail) {
         when (state) {

@@ -2,12 +2,12 @@ package com.example.testapp.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.testapp.data.database.entity.AuthData
+import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Channels
 import com.example.testapp.data.database.entity.Users
 
 @Database(
-    entities = [Users::class, Channels::class, AuthData::class],
+    entities = [Users::class, Channels::class, SaveUser::class],
     version = 1,
     exportSchema = false
 )

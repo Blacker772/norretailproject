@@ -3,7 +3,7 @@ package com.example.testapp.data.database
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.testapp.data.database.entity.AuthData
+import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 
 
@@ -11,7 +11,7 @@ import com.example.testapp.data.database.entity.Users
 interface DAO {
 
     @Insert
-    suspend fun authRemember(data: AuthData)
+    suspend fun authRemember(data: SaveUser)
 
     @Insert
     suspend fun insertUser(data: Users)

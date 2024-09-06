@@ -1,18 +1,24 @@
 package com.example.testapp.ui.log_in
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.room.RoomDatabase
 import com.example.testapp.R
+import com.example.testapp.data.database.AppDatabase
+import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.main_menu.viewpager.ViewPagerFragment
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -51,11 +57,16 @@ class LoginFragment : Fragment() {
             btEnter.setOnClickListener {
                 val login = binding?.etLoginText?.text.toString()
                 val password = binding?.etPasswordText?.text.toString()
+                val checkBox = binding?.cbSaveData
 
                 if (login.isNotEmpty()) {
                     if (password.isNotEmpty()) {
                         lifecycleScope.launch {
                             viewModel.getLogin(login, password)
+                        }
+                        if(checkBox?.isChecked == true){
+                            Log.d("databaseAAA", "onViewCreated: saved user ")
+                            viewModel.saveUser(SaveUser(null, login, password))
                         }
                     } else {
                         binding?.tiPassword?.error = "Введите пароль!"
@@ -64,19 +75,9 @@ class LoginFragment : Fragment() {
                     binding?.tiLogin?.error = "Введите логин!"
                 }
             }
-
-            etLoginText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    binding?.tiLogin?.error = null
-                }
-            }
-            etPasswordText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    binding?.tiPassword?.error = null
-                }
-            }
+            setupFocusChange(etLoginText, tiLogin)
+            setupFocusChange(etPasswordText, tiPassword)
         }
-        
     }
 
     //Метод, обрабатывающий состояния UiState
@@ -95,6 +96,14 @@ class LoginFragment : Fragment() {
             }
             else -> {
                 binding?.progressBar?.isVisible = false
+            }
+        }
+    }
+
+    private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
+        editText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                textInputLayout?.error = null
             }
         }
     }
