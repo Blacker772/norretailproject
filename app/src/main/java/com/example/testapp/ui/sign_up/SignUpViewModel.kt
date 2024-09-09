@@ -3,6 +3,8 @@ package com.example.testapp.ui.sign_up
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testapp.data.createuser.CreateUserModel
+import com.example.testapp.data.createuser.ErrorCreateUser
+import com.example.testapp.data.database.entity.Users
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<UiStateSignUp>(UiStateSignUp.None)
@@ -22,7 +24,7 @@ class SignUpViewModel @Inject constructor(
 
     fun createUser(
         login: String, password: String, family: String,
-        name: String, lastname: String, email: String
+        name: String, lastname: String, email: String,
     ) {
         viewModelScope.launch {
             repository.createUSerRepo(
@@ -36,9 +38,19 @@ class SignUpViewModel @Inject constructor(
                 .catch { e ->
                     _state.value = UiStateSignUp.Error(e.message, false)
                 }
-                .collect{
-                    _state.value = UiStateSignUp.Data(it, false)
+                .collect { result ->
+                    _state.value = UiStateSignUp.Data(result, false)
                 }
+        }
+    }
+    fun insertUser(
+        login: String, password: String, family: String,
+        name: String, lastname: String, email: String,
+    ) {
+        viewModelScope.launch {
+            repository.insertUser(
+                Users(null, login, password, family, name, lastname, email)
+            )
         }
     }
 }

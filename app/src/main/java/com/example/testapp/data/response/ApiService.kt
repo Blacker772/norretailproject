@@ -11,6 +11,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
+
     //каналы сбыта
     @GET("/channels")
     suspend fun getChannels(): Response<List<ChannelsModel>>
@@ -26,5 +27,4 @@ interface ApiService {
     //проверка почты(имеется ли такая почта на сервере)
     @GET("/user/find/email")
     suspend fun checkMail(@Query("email") mail: String): Response<CreateUserModel>
-
 }

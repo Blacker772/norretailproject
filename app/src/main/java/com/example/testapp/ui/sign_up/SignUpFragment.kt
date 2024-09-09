@@ -22,6 +22,7 @@ import com.example.testapp.databinding.FragmentSignUpBinding
 import com.example.testapp.ui.log_in.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,13 +31,23 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                onChangeState(it)
+            }
+        }
 
         binding?.apply {
             setupEditorAction(etLogin, etPassword)
@@ -51,21 +62,25 @@ class SignUpFragment : Fragment() {
             setupFocusChange(etMail, tiMail)
 
             btRegisterUser.setOnClickListener {
-                val login = binding?.etLogin?.text.toString()
-                val password = binding?.etPassword?.text.toString()
-                val checkPassword = binding?.etPasswordCheck?.text.toString()
-                val family = binding?.etFamily?.text.toString()
-                val name = binding?.etName?.text.toString()
-                val lastname = binding?.etLastname?.text.toString()
-                val email = binding?.etMail?.text.toString()
+                val login = etLogin.text.toString()
+                val password = etPassword.text.toString()
+                val checkPassword = etPasswordCheck.text.toString()
+                val family = etFamily.text.toString()
+                val name = etName.text.toString()
+                val lastname = etLastname.text.toString()
+                val email = etMail.text.toString()
 
                 fun onSubmit() {
-                    if (validateInputs(login, password, checkPassword, email, family, name, lastname)) {
-                        viewModel.createUser(login, password, family, name, lastname, email)
+                    if (validateInputs(
+                            login, password,
+                            checkPassword, email,
+                            family, name, lastname
+                        )
+                    ) {
                         lifecycleScope.launch {
-                            viewModel.state.collect {
-                                onChangeState(it)
-                            }
+                            viewModel.createUser(login, password, family, name, lastname, email)
+
+                            viewModel.insertUser(login, password, family, name, lastname, email)
                         }
                     }
                 }
@@ -80,7 +95,7 @@ class SignUpFragment : Fragment() {
 
     private fun setupEditorAction(
         editText: EditText?, nextFocusView: View?,
-        actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT
+        actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT,
     ) {
         editText?.setOnEditorActionListener { _, actionId, event ->
             if (actionId == actionIdToHandle || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -102,7 +117,7 @@ class SignUpFragment : Fragment() {
 
     private fun setupCloseKeyboard(
         editText: EditText?,
-        actionIdToHandle: Int = EditorInfo.IME_ACTION_DONE
+        actionIdToHandle: Int = EditorInfo.IME_ACTION_DONE,
     ) {
         editText?.setOnEditorActionListener { _, actionId, event ->
             if (actionId == actionIdToHandle || event?.keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -115,9 +130,10 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun validateInputs(login: String, password: String,
+    private fun validateInputs(
+        login: String, password: String,
         checkPassword: String, email: String,
-        family: String, name: String, lastname: String
+        family: String, name: String, lastname: String,
     ): Boolean {
         return when {
             login.isEmpty() -> showToast("Логин не может быть пустым")

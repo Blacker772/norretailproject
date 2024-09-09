@@ -8,7 +8,7 @@ import com.example.testapp.data.database.entity.Users
 
 @Database(
     entities = [Users::class, Channels::class, SaveUser::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 
