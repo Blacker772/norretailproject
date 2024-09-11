@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
 
     fun saveUser(user: SaveUser) {
         viewModelScope.launch {
-            repository.saveUser(user)
+            repository.saveUserRepo(user)
         }
     }
 }

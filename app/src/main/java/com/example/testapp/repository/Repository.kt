@@ -14,69 +14,99 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val apiService: ApiService,
-    private val dao: DAO,
+    private val dao: DAO
 ) {
 
+    //API
     //Запрос на вход по логину и паролю
     //LoginFragment
-    fun getLoginRepo(login: String, password: String): Flow<UserModel> = flow {
-        val result = apiService.getLogin(AuthModel(login, password))
-        if (result.isSuccessful) {
-            result.body()?.let { emit(it) } ?: throw Exception("Response is null")
-        } else {
-            throw Exception("Error ${result.code()}")
+    fun getLoginRepo(user: AuthModel): Flow<UserModel> = flow {
+        try {
+            val result = apiService.getLogin(user)
+            if (result.isSuccessful) {
+                val requestBody = result.body()
+                if (requestBody != null) {
+                    dao.saveUser(SaveUser(null, user.login, user.password))
+                    emit(requestBody)
+                } else {
+                    throw Exception("Response body is null")
+                }
+            } else {
+                throw Exception("Error ${result.code()}: ${result.message()}")
+            }
+        } catch (e: Exception) {
+            throw Exception(e.message ?: "An unknown error occurred")
         }
     }
 
-    //Запрос на регистрацию
+    //API
+    //Регистрация пользователя на сервере и в БД
     //SignUpFragment
-    fun createUSerRepo(user: CreateUserModel): Flow<ErrorCreateUser> = flow {
+    fun createUSerRepo(account: CreateUserModel): Flow<ErrorCreateUser> = flow {
         try {
-            val result = apiService.createUser(user)
+            val result = apiService.createUser(account)
             if (result.isSuccessful) {
-                result.body()?.let { emit(it) } ?: throw Exception("Response is null")
+                val responseBody = result.body()
+                if (responseBody != null) {
+                    dao.insertUser(
+                        Users(
+                            null, account.login,
+                            account.password, account.family,
+                            account.name, account.lastname, account.email
+                        )
+                    )
+                    emit(responseBody)
+                } else {
+                    throw Exception("Response body is null")
+                }
             } else {
                 val errorBody = result.errorBody()?.string() ?: "Unknown error"
                 emit(ErrorCreateUser(errorBody))
             }
         } catch (e: Exception) {
-            emit(ErrorCreateUser(e.message ?: "Error"))
+            emit(ErrorCreateUser(e.message ?: "An unknown error occurred"))
         }
-
     }
 
+    //API
     //Проверка почты(имеется ли такая почта на сервере)
     //MailFragment
-    fun cheMail(mail: String): Flow<CreateUserModel> = flow {
-        val result = apiService.checkMail(mail)
-        if (result.isSuccessful) {
-            result.body()?.let { emit(it) } ?: throw Exception("Response is null")
-        } else {
-            throw Exception("${result.code()}")
+    fun checkMailRepo(mail: String): Flow<CreateUserModel> = flow {
+        try {
+            val result = apiService.checkMail(mail)
+            if (result.isSuccessful) {
+                val requestBody = result.body()
+                if (requestBody != null) {
+                    emit(requestBody)
+                } else {
+                    throw Exception("Response body is null")
+                }
+            } else {
+                throw Exception("Error ${result.code()}: ${result.message()}")
+            }
+        }catch (e: Exception){
+            throw Exception(e.message ?: "An unknown error occurred")
         }
     }
 
-    //Метод для сохранения пользователя в БД
-    //LoginFragment
-    suspend fun saveUser(user: SaveUser) {
-        dao.saveUser(user)
-    }
-
-    //Метод для добавления пользователя в БД
-    //SignUpFragment
-    suspend fun insertUser(account: Users) {
-        dao.insertUser(account)
-    }
-
-    //Метод для получения пользователя из БД
-    //LoginFragment
-    suspend fun getAuthData(login: String): SaveUser {
-        return dao.getAuthData(login)
-    }
+//    //БД
+//    //Метод для сохранения пользователя в БД
+//    //LoginFragment
+//    suspend fun saveUserRepo(user: SaveUser) {
+//        dao.saveUser(user)
+//    }
 //
+//    //БД
+//    //Метод для добавления пользователя в БД
+//    //SignUpFragment
+//    suspend fun insertUserRepo(account: Users) {
+//        dao.insertUser(account)
+//    }
+//
+//    //БД
 //    //Метод для получения пользователя по логину
 //    //LoginFragment
-//    suspend fun getUserByLogin(login: String): Users {
+//    suspend fun getUserByLogin(login: String): Users? {
 //        return dao.getUserByLogin(login)
 //    }
 }

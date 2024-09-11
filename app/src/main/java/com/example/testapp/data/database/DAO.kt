@@ -11,13 +11,13 @@ import com.example.testapp.data.database.entity.Users
 @Dao
 interface DAO {
 
-    //получение пользователя
-    @Query("SELECT * FROM auth_data WHERE login = :login")
-    suspend fun getAuthData(login: String): SaveUser
+//    //получение пользователя
+//    @Query("SELECT * FROM auth_data WHERE login = :login")
+//    suspend fun getUser(login: String): SaveUser?
 
     //добавление пользователя, если он отсутствует в БД
     @Insert
-    suspend fun saveUser(data: SaveUser)
+    suspend fun saveUser(user: SaveUser)
 
     //добавление пользователя
     @Insert
@@ -25,5 +25,5 @@ interface DAO {
 
     //получение пользователя по логину
     @Query("SELECT * FROM users WHERE login = :login")
-    suspend fun getUserByLogin(login: String): Users
+    suspend fun getUserByLogin(login: String): Users?
 }

@@ -43,6 +43,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Установка слушателей состояния UiState
         lifecycleScope.launch {
             viewModel.state.collect {
                 onChangeState(it)
@@ -50,25 +51,32 @@ class SignUpFragment : Fragment() {
         }
 
         binding?.apply {
+
+            //Установка слушателей нажатия клавиш
             setupEditorAction(etLogin, etPassword)
             setupEditorAction(etPassword, etPasswordCheck)
             setupEditorAction(etPasswordCheck, etMail)
             setupEditorAction(etMail, etFamily)
             setupEditorAction(etFamily, etName)
             setupEditorAction(etName, etLastname)
+
+            //Установка слушателей нажатия клавиш
             setupCloseKeyboard(etLastname)
+
+            //Установка слушателей нажатия фокуса
             setupFocusChange(etPassword, tiPassword)
             setupFocusChange(etPasswordCheck, tiPassword2)
             setupFocusChange(etMail, tiMail)
 
+            //Установка слушателей нажатия кнопок
             btRegisterUser.setOnClickListener {
-                val login = etLogin.text.toString()
-                val password = etPassword.text.toString()
-                val checkPassword = etPasswordCheck.text.toString()
-                val family = etFamily.text.toString()
-                val name = etName.text.toString()
-                val lastname = etLastname.text.toString()
-                val email = etMail.text.toString()
+                val login = etLogin.text.toString().trim()
+                val password = etPassword.text.toString().trim()
+                val checkPassword = etPasswordCheck.text.toString().trim()
+                val family = etFamily.text.toString().trim()
+                val name = etName.text.toString().trim()
+                val lastname = etLastname.text.toString().trim()
+                val email = etMail.text.toString().trim()
 
                 fun onSubmit() {
                     if (validateInputs(
@@ -79,8 +87,6 @@ class SignUpFragment : Fragment() {
                     ) {
                         lifecycleScope.launch {
                             viewModel.createUser(login, password, family, name, lastname, email)
-
-                            viewModel.insertUser(login, password, family, name, lastname, email)
                         }
                     }
                 }
@@ -93,6 +99,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    //Метод для установки слушателей нажатия клавиш
     private fun setupEditorAction(
         editText: EditText?, nextFocusView: View?,
         actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT,
@@ -107,6 +114,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    //Метод для установки слушателей нажатия фокуса
     private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
         editText?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -115,6 +123,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    //Метод для закрытия клавиатуры
     private fun setupCloseKeyboard(
         editText: EditText?,
         actionIdToHandle: Int = EditorInfo.IME_ACTION_DONE,
@@ -130,6 +139,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    //Метод для валидации введенных данных
     private fun validateInputs(
         login: String, password: String,
         checkPassword: String, email: String,
@@ -162,39 +172,50 @@ class SignUpFragment : Fragment() {
         }
     }
 
+    //Метод для показа Toast
     private fun showToast(message: String): Boolean {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         return false
     }
 
+    //Метод, обрабатывающий состояния UiState
     private fun onChangeState(state: UiStateSignUp) {
-        when (state) {
-            is UiStateSignUp.Loading -> {
-                binding?.progressBar?.isVisible = state.isLoading
-            }
+        binding?.apply {
+            when (state) {
+                is UiStateSignUp.Loading -> {
+                    progressBar.isVisible = state.isLoading
+                }
 
-            is UiStateSignUp.Error -> {
-                Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                binding?.progressBar?.isVisible = state.isLoading
-            }
+                is UiStateSignUp.Error -> {
+                    progressBar.isVisible = false
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                }
 
-            is UiStateSignUp.Data -> {
-                binding?.progressBar?.isVisible = state.isLoading
-                action(LoginFragment())
-            }
+                is UiStateSignUp.Data -> {
+                    progressBar.isVisible = false
+                    action(LoginFragment())
+                }
 
-            else -> {
-                binding?.progressBar?.isVisible = false
+                else -> {
+                    progressBar.isVisible = false
+                }
             }
         }
+
     }
 
+    //Метод для переключения фрагментов
     private fun action(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
             .replace(R.id.fragmentContainer, fragment)
             .commit()
     }
 
+    //Метод для проверки формата почты
     private fun String.isEmailValid(): Boolean {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
             .matches()

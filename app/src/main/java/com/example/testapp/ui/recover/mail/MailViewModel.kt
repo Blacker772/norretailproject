@@ -27,7 +27,7 @@ class MailViewModel @Inject constructor(
 
     fun checkMail(mail: String){
         viewModelScope.launch {
-            repository.cheMail(mail)
+            repository.checkMailRepo(mail)
                 .onStart {
                     _state.value = UiStateMail.Loading(true)
                 }

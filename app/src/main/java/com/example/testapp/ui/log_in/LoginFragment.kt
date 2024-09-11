@@ -43,6 +43,7 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.state.collect {
                 onChangeState(it)
+
             }
         }
 
