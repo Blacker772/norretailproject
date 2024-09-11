@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "channels")
 data class Channels(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int?,
 
     @ColumnInfo
     val name: String,

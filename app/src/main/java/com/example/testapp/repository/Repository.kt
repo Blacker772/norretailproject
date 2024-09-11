@@ -26,7 +26,6 @@ class Repository @Inject constructor(
             if (result.isSuccessful) {
                 val requestBody = result.body()
                 if (requestBody != null) {
-                    dao.saveUser(SaveUser(null, user.login, user.password))
                     emit(requestBody)
                 } else {
                     throw Exception("Response body is null")
@@ -37,6 +36,13 @@ class Repository @Inject constructor(
         } catch (e: Exception) {
             throw Exception(e.message ?: "An unknown error occurred")
         }
+    }
+
+    //БД
+    //Метод для сохранения логина и пароля при входе
+    //LoginFragment
+    suspend fun saveUserAuth(user: SaveUser) {
+        dao.saveUser(user)
     }
 
     //API
@@ -89,4 +95,7 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun getUserByLoginAuth(login: String): SaveUser? {
+        return dao.getUserByLoginAuth(login)
+    }
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.data.auth.AuthModel
+import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.menu.viewpager.ViewPagerFragment
 import com.google.android.material.textfield.TextInputLayout
@@ -25,7 +26,11 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -50,14 +55,24 @@ class LoginFragment : Fragment() {
                     if (password.isNotEmpty()) {
                         if (checkBox.isChecked) {
                             lifecycleScope.launch {
-                                viewModel.getLogin(AuthModel(login, password))
+                                val result = viewModel.getUserLoginAuth(login)
+                                if (result != null) {
+                                    if (result.password == password) {
+                                        viewModel.getLogin(AuthModel(login, password))
+                                    } else {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            "Неверный логин и/или пароль",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                } else {
+                                    viewModel.saveUserAuth(SaveUser(null, login, password))
+                                    viewModel.getLogin(AuthModel(login, password))
+                                }
                             }
                         } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "Поставьте галочку на \"Запомнить меня\"",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            viewModel.getLogin(AuthModel(login, password))
                         }
                     } else {
                         tiPassword.error = "Введите пароль!"
