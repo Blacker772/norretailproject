@@ -2,7 +2,6 @@ package com.example.testapp.ui.sign_up
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +21,6 @@ import com.example.testapp.databinding.FragmentSignUpBinding
 import com.example.testapp.ui.log_in.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,11 +29,7 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -53,20 +47,20 @@ class SignUpFragment : Fragment() {
         binding?.apply {
 
             //Установка слушателей нажатия клавиш
-            setupEditorAction(etLogin, etPassword)
-            setupEditorAction(etPassword, etPasswordCheck)
-            setupEditorAction(etPasswordCheck, etMail)
-            setupEditorAction(etMail, etFamily)
-            setupEditorAction(etFamily, etName)
-            setupEditorAction(etName, etLastname)
+            onSetupEditorAction(etLogin, etPassword)
+            onSetupEditorAction(etPassword, etPasswordCheck)
+            onSetupEditorAction(etPasswordCheck, etMail)
+            onSetupEditorAction(etMail, etFamily)
+            onSetupEditorAction(etFamily, etName)
+            onSetupEditorAction(etName, etLastname)
 
             //Установка слушателей нажатия клавиш
-            setupCloseKeyboard(etLastname)
+            onSetupCloseKeyboard(etLastname)
 
             //Установка слушателей нажатия фокуса
-            setupFocusChange(etPassword, tiPassword)
-            setupFocusChange(etPasswordCheck, tiPassword2)
-            setupFocusChange(etMail, tiMail)
+            onSetupFocusChange(etPassword, tiPassword)
+            onSetupFocusChange(etPasswordCheck, tiPassword2)
+            onSetupFocusChange(etMail, tiMail)
 
             //Установка слушателей нажатия кнопок
             btRegisterUser.setOnClickListener {
@@ -79,7 +73,7 @@ class SignUpFragment : Fragment() {
                 val email = etMail.text.toString().trim()
 
                 fun onSubmit() {
-                    if (validateInputs(
+                    if (onValidateInputs(
                             login, password,
                             checkPassword, email,
                             family, name, lastname
@@ -100,7 +94,7 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для установки слушателей нажатия клавиш
-    private fun setupEditorAction(
+    private fun onSetupEditorAction(
         editText: EditText?, nextFocusView: View?,
         actionIdToHandle: Int = EditorInfo.IME_ACTION_NEXT,
     ) {
@@ -115,7 +109,7 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для установки слушателей нажатия фокуса
-    private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
+    private fun onSetupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
         editText?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 textInputLayout?.error = null
@@ -124,7 +118,7 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для закрытия клавиатуры
-    private fun setupCloseKeyboard(
+    private fun onSetupCloseKeyboard(
         editText: EditText?,
         actionIdToHandle: Int = EditorInfo.IME_ACTION_DONE,
     ) {
@@ -140,19 +134,19 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для валидации введенных данных
-    private fun validateInputs(
+    private fun onValidateInputs(
         login: String, password: String,
         checkPassword: String, email: String,
         family: String, name: String, lastname: String,
     ): Boolean {
         return when {
-            login.isEmpty() -> showToast("Логин не может быть пустым")
-            password.isEmpty() -> showToast("Пароль не может быть пустым")
-            checkPassword.isEmpty() -> showToast("Повторите пароль")
-            email.isEmpty() -> showToast("Почта не может быть пустой")
-            family.isEmpty() -> showToast("Фамилия не может быть пустой")
-            name.isEmpty() -> showToast("Имя не может быть пустым")
-            lastname.isEmpty() -> showToast("Отчество не может быть пустым")
+            login.isEmpty() -> onShowToast("Логин не может быть пустым")
+            password.isEmpty() -> onShowToast("Пароль не может быть пустым")
+            checkPassword.isEmpty() -> onShowToast("Повторите пароль")
+            email.isEmpty() -> onShowToast("Почта не может быть пустой")
+            family.isEmpty() -> onShowToast("Фамилия не может быть пустой")
+            name.isEmpty() -> onShowToast("Имя не может быть пустым")
+            lastname.isEmpty() -> onShowToast("Отчество не может быть пустым")
             password.length < 6 -> {
                 binding?.tiPassword?.error = "Пароль должен содержать минимум 6 символов!"
                 false
@@ -173,7 +167,7 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для показа Toast
-    private fun showToast(message: String): Boolean {
+    private fun onShowToast(message: String): Boolean {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         return false
     }
@@ -193,7 +187,7 @@ class SignUpFragment : Fragment() {
 
                 is UiStateSignUp.Data -> {
                     progressBar.isVisible = false
-                    action(LoginFragment())
+                    onAction(LoginFragment())
                 }
 
                 else -> {
@@ -205,7 +199,7 @@ class SignUpFragment : Fragment() {
     }
 
     //Метод для переключения фрагментов
-    private fun action(fragment: Fragment) {
+    private fun onAction(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(
                 android.R.anim.slide_in_left,

@@ -1,4 +1,4 @@
-package com.example.testapp.ui.main_menu.pages.route
+package com.example.testapp.ui.menu.pages.route
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

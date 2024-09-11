@@ -1,8 +1,8 @@
-package com.example.testapp.ui.main_menu.viewpager
+package com.example.testapp.ui.menu.viewpager
 
 import androidx.lifecycle.ViewModel
 import com.example.testapp.R
-import com.example.testapp.ui.main_menu.header.ButtonModel
+import com.example.testapp.ui.menu.header.ButtonModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

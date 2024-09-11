@@ -84,29 +84,9 @@ class Repository @Inject constructor(
             } else {
                 throw Exception("Error ${result.code()}: ${result.message()}")
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             throw Exception(e.message ?: "An unknown error occurred")
         }
     }
 
-//    //БД
-//    //Метод для сохранения пользователя в БД
-//    //LoginFragment
-//    suspend fun saveUserRepo(user: SaveUser) {
-//        dao.saveUser(user)
-//    }
-//
-//    //БД
-//    //Метод для добавления пользователя в БД
-//    //SignUpFragment
-//    suspend fun insertUserRepo(account: Users) {
-//        dao.insertUser(account)
-//    }
-//
-//    //БД
-//    //Метод для получения пользователя по логину
-//    //LoginFragment
-//    suspend fun getUserByLogin(login: String): Users? {
-//        return dao.getUserByLogin(login)
-//    }
 }

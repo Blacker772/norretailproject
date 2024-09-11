@@ -40,21 +40,21 @@ class MailFragment : Fragment() {
 
         binding?.apply {
             btSent.setOnClickListener{
-                val mail = binding?.etMail?.text.toString()
+                val mail = etMail.text.toString().trim()
                 if (mail.isNotEmpty()){
                     lifecycleScope.launch {
                         viewModel.checkMail(mail)
                     }
                 }else{
-                    binding?.tiMail?.error = "Введите почту!"
+                    tiMail.error = "Введите почту!"
                 }
 
             }
-            setupFocusChange(etMail, tiMail)
+            onSetupFocusChange(etMail, tiMail)
         }
     }
 
-    private fun setupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
+    private fun onSetupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
         editText?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 textInputLayout?.error = null

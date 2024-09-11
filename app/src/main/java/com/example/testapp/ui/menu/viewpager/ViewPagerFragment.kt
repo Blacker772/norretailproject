@@ -1,4 +1,4 @@
-package com.example.testapp.ui.main_menu.viewpager
+package com.example.testapp.ui.menu.viewpager
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentViewpagerBinding
-import com.example.testapp.ui.main_menu.header.HeaderAdapter
+import com.example.testapp.ui.menu.header.HeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

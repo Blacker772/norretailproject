@@ -12,19 +12,19 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    //каналы сбыта
+    //Каналы сбыта
     @GET("/channels")
     suspend fun getChannels(): Response<List<ChannelsModel>>
 
-    //запрос на вход по логину и паролю
+    //Вход по логину и паролю
     @POST("/login")
     suspend fun getLogin(@Body auth: AuthModel): Response<UserModel>
 
-    //регистрация пользователя
+    //Регистрация пользователя
     @POST("/users")
     suspend fun createUser(@Body user: CreateUserModel): Response<ErrorCreateUser>
 
-    //проверка почты(имеется ли такая почта на сервере)
+    //Проверка почты(имеется ли такая почта на сервере)
     @GET("/user/find/email")
     suspend fun checkMail(@Query("email") mail: String): Response<CreateUserModel>
 }

@@ -1,11 +1,11 @@
-package com.example.testapp.ui.main_menu.viewpager
+package com.example.testapp.ui.menu.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.testapp.ui.main_menu.pages.price.PriceListFragment
-import com.example.testapp.ui.main_menu.pages.report.ReportFragment
+import com.example.testapp.ui.menu.pages.price.PriceListFragment
+import com.example.testapp.ui.menu.pages.report.ReportFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle): FragmentStateAdapter(fragmentManager, lifecycle) {
 

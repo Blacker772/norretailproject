@@ -2,7 +2,7 @@ package com.example.testapp.ui.log_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testapp.data.database.entity.SaveUser
+import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,13 +18,12 @@ class LoginViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-
     private val _state = MutableStateFlow<UiStateLogIn>(UiStateLogIn.None)
     val state: StateFlow<UiStateLogIn> get() = _state
 
-    fun getLogin(login: String, password: String) {
+    fun getLogin(user: AuthModel) {
         viewModelScope.launch {
-            repository.getLoginRepo(login, password)
+            repository.getLoginRepo(AuthModel(user.login, user.password))
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
                     delay(2000)
@@ -35,12 +34,6 @@ class LoginViewModel @Inject constructor(
                 .collect {
                     _state.value = UiStateLogIn.Data(it, false)
                 }
-        }
-    }
-
-    fun saveUser(user: SaveUser) {
-        viewModelScope.launch {
-            repository.saveUserRepo(user)
         }
     }
 }
