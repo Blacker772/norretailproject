@@ -41,9 +41,8 @@ class SignUpViewModel @Inject constructor(
                     _state.value = UiStateSignUp.Error(e.message, false)
                 }
                 .collect { result ->
-                    _state.value = UiStateSignUp.Data(result, false)
+                    _state.value = result
                 }
         }
-
     }
 }

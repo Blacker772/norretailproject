@@ -20,10 +20,6 @@ interface DAO {
     @Insert
     suspend fun insertUser(account: Users)
 
-    //Получение пользователя по логину для регистрации
-    @Query("SELECT * FROM users WHERE login = :login")
-    suspend fun getUserByLogin(login: String): Users?
-
     //Получение пользователя по логину для авторизации
     @Query("SELECT * FROM auth_data WHERE login = :login")
     suspend fun getUserByLoginAuth(login: String): SaveUser?

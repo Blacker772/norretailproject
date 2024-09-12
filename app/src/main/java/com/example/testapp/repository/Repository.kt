@@ -8,6 +8,7 @@ import com.example.testapp.data.database.DAO
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 import com.example.testapp.data.response.ApiService
+import com.example.testapp.ui.sign_up.UiStateSignUp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -39,7 +40,14 @@ class Repository @Inject constructor(
     }
 
     //БД
-    //Метод для сохранения логина и пароля при входе
+    //Получение пользователя по логину для авторизации(есть ли такой пользователь в бд)
+    //LoginFragment
+    suspend fun getUserByLoginAuth(login: String): SaveUser? {
+        return dao.getUserByLoginAuth(login)
+    }
+
+    //БД
+    //Метод для сохранения логина и пароля при входе(если нет такого пользователя в бд, то сохраняем)
     //LoginFragment
     suspend fun saveUserAuth(user: SaveUser) {
         dao.saveUser(user)
@@ -48,7 +56,7 @@ class Repository @Inject constructor(
     //API
     //Регистрация пользователя на сервере и в БД
     //SignUpFragment
-    fun createUSerRepo(account: CreateUserModel): Flow<ErrorCreateUser> = flow {
+    fun createUSerRepo(account: CreateUserModel): Flow<UiStateSignUp> = flow {
         try {
             val result = apiService.createUser(account)
             if (result.isSuccessful) {
@@ -61,16 +69,16 @@ class Repository @Inject constructor(
                             account.name, account.lastname, account.email
                         )
                     )
-                    emit(responseBody)
+                    emit(UiStateSignUp.Data(responseBody, false))
                 } else {
                     throw Exception("Response body is null")
                 }
             } else {
                 val errorBody = result.errorBody()?.string() ?: "Unknown error"
-                emit(ErrorCreateUser(errorBody))
+                emit(UiStateSignUp.Error(errorBody, false))
             }
         } catch (e: Exception) {
-            emit(ErrorCreateUser(e.message ?: "An unknown error occurred"))
+            emit(UiStateSignUp.Error(e.message,false))
         }
     }
 
@@ -95,7 +103,5 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getUserByLoginAuth(login: String): SaveUser? {
-        return dao.getUserByLoginAuth(login)
-    }
+
 }

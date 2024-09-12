@@ -178,15 +178,32 @@ class SignUpFragment : Fragment() {
             when (state) {
                 is UiStateSignUp.Loading -> {
                     progressBar.isVisible = state.isLoading
+                    btRegisterUser.isEnabled = !state.isLoading
+                    etLogin.isEnabled = !state.isLoading
+                    etPassword.isEnabled = !state.isLoading
+                    etPasswordCheck.isEnabled = !state.isLoading
+                    etMail.isEnabled = !state.isLoading
+                    etFamily.isEnabled = !state.isLoading
+                    etName.isEnabled = !state.isLoading
+                    etLastname.isEnabled = !state.isLoading
                 }
 
                 is UiStateSignUp.Error -> {
                     progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                    btRegisterUser.isEnabled = true
+                    etLogin.isEnabled = true
+                    etPassword.isEnabled = true
+                    etPasswordCheck.isEnabled = true
+                    etMail.isEnabled = true
+                    etFamily.isEnabled = true
+                    etName.isEnabled = true
+                    etLastname.isEnabled = true
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_LONG).show()
                 }
 
                 is UiStateSignUp.Data -> {
                     progressBar.isVisible = false
+                    Toast.makeText(requireContext(), "Аккаунт успешно создан!", Toast.LENGTH_LONG).show()
                     onAction(LoginFragment())
                 }
 
@@ -195,7 +212,6 @@ class SignUpFragment : Fragment() {
                 }
             }
         }
-
     }
 
     //Метод для переключения фрагментов

@@ -26,11 +26,7 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -95,23 +91,37 @@ class LoginFragment : Fragment() {
 
     //Метод, обрабатывающий состояния UiState
     private fun onChangeState(state: UiStateLogIn) {
-        when (state) {
-            is UiStateLogIn.Loading -> {
-                binding?.progressBar?.isVisible = state.isLoading
-            }
+        binding?.apply {
+            when (state) {
+                is UiStateLogIn.Loading -> {
+                   progressBar.isVisible = state.isLoading
+                    btEnter.isEnabled = !state.isLoading
+                    btSignUp.isEnabled = !state.isLoading
+                    btResetPassword.isEnabled = !state.isLoading
+                    cbSaveData.isEnabled = !state.isLoading
+                    tiLogin.isEnabled = !state.isLoading
+                    tiPassword.isEnabled = !state.isLoading
+                }
 
-            is UiStateLogIn.Error -> {
-                Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                binding?.progressBar?.isVisible = state.isLoading
-            }
+                is UiStateLogIn.Error -> {
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                    progressBar.isVisible = true
+                    btEnter.isEnabled = true
+                    btSignUp.isEnabled = true
+                    btResetPassword.isEnabled = true
+                    cbSaveData.isEnabled = true
+                    tiLogin.isEnabled = true
+                    tiPassword.isEnabled = true
+                }
 
-            is UiStateLogIn.Data -> {
-                binding?.progressBar?.isVisible = state.isLoading
-                onAction(ViewPagerFragment())
-            }
+                is UiStateLogIn.Data -> {
+                    progressBar.isVisible = state.isLoading
+                    onAction(ViewPagerFragment())
+                }
 
-            else -> {
-                binding?.progressBar?.isVisible = false
+                else -> {
+                    progressBar.isVisible = false
+                }
             }
         }
     }
