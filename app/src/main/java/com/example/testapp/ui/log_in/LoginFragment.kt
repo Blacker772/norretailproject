@@ -16,6 +16,8 @@ import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.example.testapp.ui.menu.viewpager.ViewPagerFragment
+import com.example.testapp.ui.recover.mail.MailFragment
+import com.example.testapp.ui.sign_up.SignUpFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,7 +28,11 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -41,52 +47,63 @@ class LoginFragment : Fragment() {
         }
 
         binding?.apply {
-
             btEnter.setOnClickListener {
+                tiLogin.error = null
+                tiPassword.error = null
                 val login = etLoginText.text.toString().trim()
                 val password = etPasswordText.text.toString().trim()
                 val checkBox = cbSaveData
 
-                if (login.isNotEmpty()) {
-                    if (password.isNotEmpty()) {
+                if (login.isEmpty()) {
+                    tiLogin.error = "Введите логин!"
+                    return@setOnClickListener
+                }
+
+                if (password.isEmpty()) {
+                    tiPassword.error = "Введите пароль!"
+                    return@setOnClickListener
+                }
+
+                lifecycleScope.launch {
+                    try {
+                        val result = viewModel.getUserLoginAuth(login)
                         if (checkBox.isChecked) {
-                            lifecycleScope.launch {
-                                val result = viewModel.getUserLoginAuth(login)
-                                if (result != null) {
-                                    if (result.password == password) {
-                                        viewModel.getLogin(AuthModel(login, password))
-                                    } else {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Неверный логин и/или пароль",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                } else {
-                                    viewModel.saveUserAuth(SaveUser(null, login, password))
-                                    viewModel.getLogin(AuthModel(login, password))
-                                }
-                            }
+                            handleSaveData(result, login, password)
                         } else {
                             viewModel.getLogin(AuthModel(login, password))
                         }
-                    } else {
-                        tiPassword.error = "Введите пароль!"
+                    } catch (e: Exception) {
+                        showToast(e.message.toString())
                     }
-                } else {
-                    tiLogin.error = "Введите логин!"
                 }
             }
 
             onSetupFocusChange(etLoginText, tiLogin)
             onSetupFocusChange(etPasswordText, tiPassword)
             btSignUp.setOnClickListener {
-                onNavigate(R.id.action_loginFragment_to_signUpFragment)
+               onAction(SignUpFragment())
             }
             btResetPassword.setOnClickListener {
-                onNavigate(R.id.action_loginFragment_to_recoverFragment)
+                onAction(MailFragment())
             }
         }
+    }
+
+    private fun handleSaveData(result: SaveUser?, login: String, password: String) {
+        if (result != null) {
+            if (result.password == password) {
+                viewModel.getLogin(AuthModel(login, password))
+            } else {
+                showToast("Неверный логин и/или пароль")
+            }
+        } else {
+            viewModel.saveUserAuth(SaveUser(null, login, password))
+            viewModel.getLogin(AuthModel(login, password))
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     //Метод, обрабатывающий состояния UiState
@@ -94,24 +111,14 @@ class LoginFragment : Fragment() {
         binding?.apply {
             when (state) {
                 is UiStateLogIn.Loading -> {
-                   progressBar.isVisible = state.isLoading
-                    btEnter.isEnabled = !state.isLoading
-                    btSignUp.isEnabled = !state.isLoading
-                    btResetPassword.isEnabled = !state.isLoading
-                    cbSaveData.isEnabled = !state.isLoading
-                    tiLogin.isEnabled = !state.isLoading
-                    tiPassword.isEnabled = !state.isLoading
+                    progressBar.isVisible = state.isLoading
+                    setViewsEnabled(!state.isLoading)
                 }
 
                 is UiStateLogIn.Error -> {
                     Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                    progressBar.isVisible = true
-                    btEnter.isEnabled = true
-                    btSignUp.isEnabled = true
-                    btResetPassword.isEnabled = true
-                    cbSaveData.isEnabled = true
-                    tiLogin.isEnabled = true
-                    tiPassword.isEnabled = true
+                    progressBar.isVisible = false
+                    setViewsEnabled(true)
                 }
 
                 is UiStateLogIn.Data -> {
@@ -126,6 +133,17 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun setViewsEnabled(isEnabled: Boolean) {
+        binding?.apply {
+            btEnter.isEnabled = isEnabled
+            btSignUp.isEnabled = isEnabled
+            btResetPassword.isEnabled = isEnabled
+            cbSaveData.isEnabled = isEnabled
+            tiLogin.isEnabled = isEnabled
+            tiPassword.isEnabled = isEnabled
+        }
+    }
+
     private fun onSetupFocusChange(editText: EditText?, textInputLayout: TextInputLayout?) {
         editText?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -134,12 +152,12 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun onNavigate(id: Int) {
-        findNavController().navigate(id)
-    }
-
     private fun onAction(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right
+            )
             .replace(R.id.fragmentContainer, fragment)
             .commit()
     }

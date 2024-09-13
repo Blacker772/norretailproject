@@ -29,7 +29,11 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -178,32 +182,19 @@ class SignUpFragment : Fragment() {
             when (state) {
                 is UiStateSignUp.Loading -> {
                     progressBar.isVisible = state.isLoading
-                    btRegisterUser.isEnabled = !state.isLoading
-                    etLogin.isEnabled = !state.isLoading
-                    etPassword.isEnabled = !state.isLoading
-                    etPasswordCheck.isEnabled = !state.isLoading
-                    etMail.isEnabled = !state.isLoading
-                    etFamily.isEnabled = !state.isLoading
-                    etName.isEnabled = !state.isLoading
-                    etLastname.isEnabled = !state.isLoading
+                    setViewsEnabled(!state.isLoading)
                 }
 
                 is UiStateSignUp.Error -> {
                     progressBar.isVisible = false
-                    btRegisterUser.isEnabled = true
-                    etLogin.isEnabled = true
-                    etPassword.isEnabled = true
-                    etPasswordCheck.isEnabled = true
-                    etMail.isEnabled = true
-                    etFamily.isEnabled = true
-                    etName.isEnabled = true
-                    etLastname.isEnabled = true
+                    setViewsEnabled(true)
                     Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_LONG).show()
                 }
 
                 is UiStateSignUp.Data -> {
                     progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Аккаунт успешно создан!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Аккаунт успешно создан!", Toast.LENGTH_LONG)
+                        .show()
                     onAction(LoginFragment())
                 }
 
@@ -214,7 +205,25 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    //Метод для переключения фрагментов
+    private fun setViewsEnabled(isEnabled: Boolean) {
+        binding?.apply {
+            btRegisterUser.isEnabled = isEnabled
+            etLogin.isEnabled = isEnabled
+            etPassword.isEnabled = isEnabled
+            etPasswordCheck.isEnabled = isEnabled
+            etMail.isEnabled = isEnabled
+            etFamily.isEnabled = isEnabled
+            etName.isEnabled = isEnabled
+            etLastname.isEnabled = isEnabled
+        }
+    }
+
+    //Метод для проверки формата почты
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
+    }
+
     private fun onAction(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(
@@ -223,12 +232,6 @@ class SignUpFragment : Fragment() {
             )
             .replace(R.id.fragmentContainer, fragment)
             .commit()
-    }
-
-    //Метод для проверки формата почты
-    private fun String.isEmailValid(): Boolean {
-        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
-            .matches()
     }
 
     override fun onDestroyView() {

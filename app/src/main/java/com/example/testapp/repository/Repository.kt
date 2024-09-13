@@ -29,13 +29,13 @@ class Repository @Inject constructor(
                 if (requestBody != null) {
                     emit(requestBody)
                 } else {
-                    throw Exception("Response body is null")
+                    throw Exception("response body is null")
                 }
             } else {
-                throw Exception("Error ${result.code()}: ${result.message()}")
+                throw Exception("error ${result.code()}: ${result.message()}")
             }
         } catch (e: Exception) {
-            throw Exception(e.message ?: "An unknown error occurred")
+            throw Exception(e.message ?: "an unknown error occurred")
         }
     }
 
@@ -71,10 +71,10 @@ class Repository @Inject constructor(
                     )
                     emit(UiStateSignUp.Data(responseBody, false))
                 } else {
-                    throw Exception("Response body is null")
+                    throw Exception("response body is null")
                 }
             } else {
-                val errorBody = result.errorBody()?.string() ?: "Unknown error"
+                val errorBody = result.errorBody()?.string() ?: "unknown error"
                 emit(UiStateSignUp.Error(errorBody, false))
             }
         } catch (e: Exception) {
@@ -93,15 +93,13 @@ class Repository @Inject constructor(
                 if (requestBody != null) {
                     emit(requestBody)
                 } else {
-                    throw Exception("Response body is null")
+                    throw Exception("response body is null")
                 }
             } else {
-                throw Exception("Error ${result.code()}: ${result.message()}")
+                throw Exception("error ${result.code()}: ${result.message()}")
             }
         } catch (e: Exception) {
-            throw Exception(e.message ?: "An unknown error occurred")
+            throw Exception(e.message ?: "an unknown error occurred")
         }
     }
-
-
 }
