@@ -19,7 +19,7 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_loginFragment_to_mailFragment"
-            app:destination="@id/mailFragment" />
+            app:destination="@id/recovery" />
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
@@ -37,43 +37,46 @@
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/mailFragment"
-        android:name="com.example.testapp.ui.recover.mail.MailFragment"
-        android:label="fragment_mail"
-        tools:layout="@layout/fragment_mail" >
-        <action
-            android:id="@+id/action_mailFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/mailFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_mailFragment_to_OTPCodeFragment"
-            app:destination="@id/OTPCodeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/OTPCodeFragment"
-        android:name="com.example.testapp.ui.recover.OTP_code.OTPCodeFragment"
-        android:label="fragment_otp_code"
-        tools:layout="@layout/fragment_otp_code" >
-        <action
-            android:id="@+id/action_OTPCodeFragment_to_passwordFragment"
-            app:destination="@id/passwordFragment" />
-        <action
-            android:id="@+id/action_OTPCodeFragment_to_mailFragment"
-            app:destination="@id/mailFragment"
-            app:popUpTo="@id/OTPCodeFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/passwordFragment"
-        android:name="com.example.testapp.ui.recover.password.PasswordFragment"
-        android:label="fragment_password"
-        tools:layout="@layout/fragment_password" >
-        <action
-            android:id="@+id/action_passwordFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/passwordFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+    <navigation android:id="@+id/recovery"
+        app:startDestination="@id/mailFragment">
+        <fragment
+            android:id="@+id/OTPCodeFragment"
+            android:name="com.example.testapp.ui.recover.OTP_code.OTPCodeFragment"
+            android:label="fragment_otp_code"
+            tools:layout="@layout/fragment_otp_code">
+            <action
+                android:id="@+id/action_OTPCodeFragment_to_passwordFragment"
+                app:destination="@id/passwordFragment" />
+            <action
+                android:id="@+id/action_OTPCodeFragment_to_mailFragment"
+                app:destination="@id/mailFragment"
+                app:popUpTo="@id/OTPCodeFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/passwordFragment"
+            android:name="com.example.testapp.ui.recover.password.PasswordFragment"
+            android:label="fragment_password"
+            tools:layout="@layout/fragment_password">
+            <action
+                android:id="@+id/action_passwordFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/passwordFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/mailFragment"
+            android:name="com.example.testapp.ui.recover.mail.MailFragment"
+            android:label="fragment_mail"
+            tools:layout="@layout/fragment_mail">
+            <action
+                android:id="@+id/action_mailFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/mailFragment"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_mailFragment_to_OTPCodeFragment"
+                app:destination="@id/OTPCodeFragment" />
+        </fragment>
+    </navigation>
 </navigation>
