@@ -30,11 +30,7 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
