@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.testapp.R
 import com.example.testapp.databinding.FragmentPasswordBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,10 @@ class PasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.btSave?.setOnClickListener {
             Toast.makeText(requireContext(), "Пароль успешно изменен!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.loginFragment, false)
+        }
+        binding?.btBack?.setOnClickListener {
+            findNavController().popBackStack(R.id.loginFragment, false)
         }
     }
 

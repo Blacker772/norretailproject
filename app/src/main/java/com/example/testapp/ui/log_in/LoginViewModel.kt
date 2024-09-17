@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: Repository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<UiStateLogIn>(UiStateLogIn.None)
@@ -27,13 +27,12 @@ class LoginViewModel @Inject constructor(
             repository.getLoginRepo(AuthModel(user.login, user.password))
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
-                    delay(2000)
                 }
                 .catch { e ->
-                    _state.value = UiStateLogIn.Error(e.message, false)
+                    _state.value = UiStateLogIn.Error(e.message)
                 }
                 .collect {
-                    _state.value = UiStateLogIn.Data(it, false)
+                    _state.value = UiStateLogIn.Data(it)
                 }
         }
     }

@@ -32,25 +32,30 @@ class MailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewModel.state.collectLatest {
-                onChangeState(it)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.state.collectLatest { state ->
+////                onChangeStateMail(state)
+//            }
+//        }
 
         binding?.apply {
-            btSent.setOnClickListener{
-                val mail = etMail.text.toString().trim()
-                if (mail.isNotEmpty()){
-                    lifecycleScope.launch {
-                        viewModel.checkMail(mail)
-                    }
-                }else{
-                    tiMail.error = "Введите почту!"
-                }
-
+            btSent.setOnClickListener {
+//                val mail = etMail.text.toString().trim()
+//                if (mail.isNotEmpty()){
+//                    lifecycleScope.launch {
+//                        viewModel.checkMail(mail)
+//                    }
+//                }else{
+//                    tiMail.error = "Введите почту!"
+//                }
+//
+//            }
+//            onSetupFocusChange(etMail, tiMail)
+                findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
             }
-            onSetupFocusChange(etMail, tiMail)
+            btBack.setOnClickListener {
+                findNavController().popBackStack(R.id.loginFragment, false)
+            }
         }
     }
 
@@ -63,7 +68,7 @@ class MailFragment : Fragment() {
     }
 
     //Метод, обрабатывающий состояния UiState
-    private fun onChangeState(state: UiStateMail) {
+    private fun onChangeStateMail(state: UiStateMail) {
         when (state) {
             is UiStateMail.Loading -> {
                 binding?.progressBar?.isVisible = state.isLoading
@@ -74,7 +79,7 @@ class MailFragment : Fragment() {
             }
             is UiStateMail.Data -> {
                 binding?.progressBar?.isVisible = state.isLoading
-                findNavController().navigate(R.id.action_recoverFragment_to_sentCodeFragment)
+                findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
             }
             else -> {
                 binding?.progressBar?.isVisible = false

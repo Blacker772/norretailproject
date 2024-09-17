@@ -1,6 +1,7 @@
 package com.example.testapp.ui.log_in
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import com.example.testapp.ui.recover.mail.MailFragment
 import com.example.testapp.ui.sign_up.SignUpFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -28,11 +30,7 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -41,8 +39,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            viewModel.state.collect {
-                onChangeState(it)
+            viewModel.state.collect { state ->
+                onChangeStateLogIn(state)
             }
         }
 
@@ -80,11 +78,12 @@ class LoginFragment : Fragment() {
 
             onSetupFocusChange(etLoginText, tiLogin)
             onSetupFocusChange(etPasswordText, tiPassword)
+
             btSignUp.setOnClickListener {
-               onAction(SignUpFragment())
+                findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
             }
             btResetPassword.setOnClickListener {
-                onAction(MailFragment())
+                findNavController().navigate(R.id.action_loginFragment_to_mailFragment)
             }
         }
     }
@@ -102,12 +101,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
     //Метод, обрабатывающий состояния UiState
-    private fun onChangeState(state: UiStateLogIn) {
+    private fun onChangeStateLogIn(state: UiStateLogIn) {
+        Log.d("NavigationDebug", "onChangeState called with state: $state")
         binding?.apply {
             when (state) {
                 is UiStateLogIn.Loading -> {
@@ -122,8 +118,12 @@ class LoginFragment : Fragment() {
                 }
 
                 is UiStateLogIn.Data -> {
-                    progressBar.isVisible = state.isLoading
-                    onAction(ViewPagerFragment())
+                    progressBar.isVisible = false
+                    val currentDestination = findNavController().currentDestination?.id
+                    Log.d("NavigationDebug", "Current destination: $currentDestination")
+//                    if (findNavController().currentDestination?.id == R.id.loginFragment) {
+                        findNavController().navigate(R.id.action_loginFragment_to_viewPagerFragment)
+//                    }
                 }
 
                 else -> {
@@ -131,6 +131,10 @@ class LoginFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setViewsEnabled(isEnabled: Boolean) {
@@ -150,16 +154,6 @@ class LoginFragment : Fragment() {
                 textInputLayout?.error = null
             }
         }
-    }
-
-    private fun onAction(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right
-            )
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
     }
 
     override fun onDestroyView() {

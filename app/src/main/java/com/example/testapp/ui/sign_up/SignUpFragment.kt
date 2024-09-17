@@ -42,9 +42,9 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Установка слушателей состояния UiState
-        lifecycleScope.launch {
-            viewModel.state.collect {
-                onChangeState(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                onChangeStateSignUp(state)
             }
         }
 
@@ -92,9 +92,95 @@ class SignUpFragment : Fragment() {
             }
 
             btBack.setOnClickListener {
-                findNavController().popBackStack()
+                findNavController().popBackStack(R.id.loginFragment, false)
             }
         }
+    }
+
+    //Метод для валидации введенных данных
+    private fun onValidateInputs(
+        login: String, password: String,
+        checkPassword: String, email: String,
+        family: String, name: String, lastname: String,
+    ): Boolean {
+        return when {
+            login.isEmpty() -> onShowToast("Логин не может быть пустым")
+            password.isEmpty() -> onShowToast("Пароль не может быть пустым")
+            checkPassword.isEmpty() -> onShowToast("Повторите пароль")
+            email.isEmpty() -> onShowToast("Почта не может быть пустой")
+            family.isEmpty() -> onShowToast("Фамилия не может быть пустой")
+            name.isEmpty() -> onShowToast("Имя не может быть пустым")
+            lastname.isEmpty() -> onShowToast("Отчество не может быть пустым")
+            password.length < 6 -> {
+                binding?.tiPassword?.error = "Пароль должен содержать минимум 6 символов!"
+                false
+            }
+
+            password != checkPassword -> {
+                binding?.tiPassword2?.error = "Пароли не совпадают!"
+                false
+            }
+
+            !email.isEmailValid() -> {
+                binding?.tiMail?.error = "Неправильный формат почты!"
+                false
+            }
+
+            else -> true
+        }
+    }
+
+    //Метод, обрабатывающий состояния UiState
+    private fun onChangeStateSignUp(state: UiStateSignUp) {
+        binding?.apply {
+            when (state) {
+                is UiStateSignUp.Loading -> {
+                    progressBar.isVisible = state.isLoading
+                    setViewsEnabled(!state.isLoading)
+                }
+
+                is UiStateSignUp.Error -> {
+                    progressBar.isVisible = false
+                    setViewsEnabled(true)
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_LONG).show()
+                }
+
+                is UiStateSignUp.Data -> {
+                    progressBar.isVisible = false
+                    onShowToast("Аккаунт успешно создан!")
+                    findNavController().popBackStack(R.id.loginFragment, false)
+                }
+
+                else -> {
+                    progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun setViewsEnabled(isEnabled: Boolean) {
+        binding?.apply {
+            btRegisterUser.isEnabled = isEnabled
+            etLogin.isEnabled = isEnabled
+            etPassword.isEnabled = isEnabled
+            etPasswordCheck.isEnabled = isEnabled
+            etMail.isEnabled = isEnabled
+            etFamily.isEnabled = isEnabled
+            etName.isEnabled = isEnabled
+            etLastname.isEnabled = isEnabled
+        }
+    }
+
+    //Метод для проверки формата почты
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
+    }
+
+    //Метод для показа Toast
+    private fun onShowToast(message: String): Boolean {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        return false
     }
 
     //Метод для установки слушателей нажатия клавиш
@@ -135,103 +221,6 @@ class SignUpFragment : Fragment() {
                 false
             }
         }
-    }
-
-    //Метод для валидации введенных данных
-    private fun onValidateInputs(
-        login: String, password: String,
-        checkPassword: String, email: String,
-        family: String, name: String, lastname: String,
-    ): Boolean {
-        return when {
-            login.isEmpty() -> onShowToast("Логин не может быть пустым")
-            password.isEmpty() -> onShowToast("Пароль не может быть пустым")
-            checkPassword.isEmpty() -> onShowToast("Повторите пароль")
-            email.isEmpty() -> onShowToast("Почта не может быть пустой")
-            family.isEmpty() -> onShowToast("Фамилия не может быть пустой")
-            name.isEmpty() -> onShowToast("Имя не может быть пустым")
-            lastname.isEmpty() -> onShowToast("Отчество не может быть пустым")
-            password.length < 6 -> {
-                binding?.tiPassword?.error = "Пароль должен содержать минимум 6 символов!"
-                false
-            }
-
-            password != checkPassword -> {
-                binding?.tiPassword2?.error = "Пароли не совпадают!"
-                false
-            }
-
-            !email.isEmailValid() -> {
-                binding?.tiMail?.error = "Неправильный формат почты!"
-                false
-            }
-
-            else -> true
-        }
-    }
-
-    //Метод для показа Toast
-    private fun onShowToast(message: String): Boolean {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        return false
-    }
-
-    //Метод, обрабатывающий состояния UiState
-    private fun onChangeState(state: UiStateSignUp) {
-        binding?.apply {
-            when (state) {
-                is UiStateSignUp.Loading -> {
-                    progressBar.isVisible = state.isLoading
-                    setViewsEnabled(!state.isLoading)
-                }
-
-                is UiStateSignUp.Error -> {
-                    progressBar.isVisible = false
-                    setViewsEnabled(true)
-                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_LONG).show()
-                }
-
-                is UiStateSignUp.Data -> {
-                    progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Аккаунт успешно создан!", Toast.LENGTH_LONG)
-                        .show()
-                    onAction(LoginFragment())
-                }
-
-                else -> {
-                    progressBar.isVisible = false
-                }
-            }
-        }
-    }
-
-    private fun setViewsEnabled(isEnabled: Boolean) {
-        binding?.apply {
-            btRegisterUser.isEnabled = isEnabled
-            etLogin.isEnabled = isEnabled
-            etPassword.isEnabled = isEnabled
-            etPasswordCheck.isEnabled = isEnabled
-            etMail.isEnabled = isEnabled
-            etFamily.isEnabled = isEnabled
-            etName.isEnabled = isEnabled
-            etLastname.isEnabled = isEnabled
-        }
-    }
-
-    //Метод для проверки формата почты
-    private fun String.isEmailValid(): Boolean {
-        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
-            .matches()
-    }
-
-    private fun onAction(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                android.R.anim.slide_in_left,
-                android.R.anim.slide_out_right
-            )
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
     }
 
     override fun onDestroyView() {

@@ -1,4 +1,4 @@
-package com.example.testapp.ui.recover.otpcode
+package com.example.testapp.ui.recover.OTP_code
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -25,7 +25,10 @@ class OTPCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.btApply?.setOnClickListener {
-            findNavController().navigate(R.id.action_sentCodeFragment_to_passwordFragment)
+            findNavController().navigate(R.id.action_OTPCodeFragment_to_passwordFragment)
+        }
+        binding?.btBack?.setOnClickListener {
+            findNavController().popBackStack(R.id.mailFragment, false)
         }
     }
 
