@@ -24,15 +24,15 @@ class LoginViewModel @Inject constructor(
 
     fun getLogin(user: AuthModel) {
         viewModelScope.launch {
-            repository.getLoginRepo(AuthModel(user.login, user.password))
+            repository.getLoginRepo1(AuthModel(user.login, user.password))
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
                 }
                 .catch { e ->
                     _state.value = UiStateLogIn.Error(e.message)
                 }
-                .collect {
-                    _state.value = UiStateLogIn.Data(it)
+                .collect {result ->
+                    _state.value = result
                 }
         }
     }

@@ -8,6 +8,7 @@ import com.example.testapp.data.database.DAO
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 import com.example.testapp.data.response.ApiService
+import com.example.testapp.ui.log_in.UiStateLogIn
 import com.example.testapp.ui.sign_up.UiStateSignUp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -36,6 +37,25 @@ class Repository @Inject constructor(
             }
         } catch (e: Exception) {
             throw Exception(e.message ?: "an unknown error occurred")
+        }
+    }
+
+    fun getLoginRepo1(user: AuthModel): Flow<UiStateLogIn> = flow {
+        try {
+            val result = apiService.getLogin(user)
+            if (result.isSuccessful) {
+                val requestBody = result.body()
+                if (requestBody != null) {
+                    emit(UiStateLogIn.Data(requestBody))
+                } else {
+                    throw Exception("response body is null")
+                }
+            } else {
+                val errorBody = result.errorBody()?.string() ?: "unknown error"
+                emit(UiStateLogIn.Error(errorBody))
+            }
+        } catch (e: Exception) {
+            emit(UiStateLogIn.Error(e.message))
         }
     }
 
@@ -69,16 +89,16 @@ class Repository @Inject constructor(
                             account.name, account.lastname, account.email
                         )
                     )
-                    emit(UiStateSignUp.Data(responseBody, false))
+                    emit(UiStateSignUp.Data(responseBody))
                 } else {
                     throw Exception("response body is null")
                 }
             } else {
                 val errorBody = result.errorBody()?.string() ?: "unknown error"
-                emit(UiStateSignUp.Error(errorBody, false))
+                emit(UiStateSignUp.Error(errorBody))
             }
         } catch (e: Exception) {
-            emit(UiStateSignUp.Error(e.message,false))
+            emit(UiStateSignUp.Error(e.message))
         }
     }
 

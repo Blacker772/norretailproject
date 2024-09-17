@@ -25,10 +25,10 @@ class PasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.btSave?.setOnClickListener {
             Toast.makeText(requireContext(), "Пароль успешно изменен!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack(R.id.loginFragment, false)
+            findNavController().navigate(R.id.action_passwordFragment_to_loginFragment)
         }
         binding?.btBack?.setOnClickListener {
-            findNavController().popBackStack(R.id.loginFragment, false)
+            findNavController().navigate(R.id.action_passwordFragment_to_loginFragment)
         }
     }
 

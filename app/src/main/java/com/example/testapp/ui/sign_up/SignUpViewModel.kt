@@ -38,7 +38,7 @@ class SignUpViewModel @Inject constructor(
                     _state.value = UiStateSignUp.Loading(true)
                 }
                 .catch { e ->
-                    _state.value = UiStateSignUp.Error(e.message, false)
+                    _state.value = UiStateSignUp.Error(e.message)
                 }
                 .collect { result ->
                     _state.value = result

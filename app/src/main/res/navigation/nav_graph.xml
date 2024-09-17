@@ -10,57 +10,70 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
-        <action
             android:id="@+id/action_loginFragment_to_viewPagerFragment"
             app:destination="@id/viewPagerFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
             android:id="@+id/action_loginFragment_to_mailFragment"
-            app:destination="@id/navigation"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
+            app:destination="@id/mailFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.testapp.ui.sign_up.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/viewPagerFragment"
         android:name="com.example.testapp.ui.menu.viewpager.ViewPagerFragment"
         android:label="fragment_viewpager"
         tools:layout="@layout/fragment_viewpager" />
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/mailFragment">
-        <fragment
-            android:id="@+id/mailFragment"
-            android:name="com.example.testapp.ui.recover.mail.MailFragment"
-            android:label="fragment_mail"
-            tools:layout="@layout/fragment_mail">
-            <action
-                android:id="@+id/action_mailFragment_to_OTPCodeFragment"
-                app:destination="@id/OTPCodeFragment" />
-        </fragment>
-        <fragment
-            android:id="@+id/OTPCodeFragment"
-            android:name="com.example.testapp.ui.recover.OTP_code.OTPCodeFragment"
-            android:label="fragment_otp_code"
-            tools:layout="@layout/fragment_otp_code">
-            <action
-                android:id="@+id/action_OTPCodeFragment_to_passwordFragment"
-                app:destination="@id/passwordFragment"
-                app:popUpTo="@id/loginFragment"
-                app:popUpToInclusive="false" />
-        </fragment>
-        <fragment
-            android:id="@+id/passwordFragment"
-            android:name="com.example.testapp.ui.recover.password.PasswordFragment"
-            android:label="fragment_password"
-            tools:layout="@layout/fragment_password"></fragment>
-    </navigation>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.testapp.ui.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/mailFragment"
+        android:name="com.example.testapp.ui.recover.mail.MailFragment"
+        android:label="fragment_mail"
+        tools:layout="@layout/fragment_mail" >
+        <action
+            android:id="@+id/action_mailFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/mailFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mailFragment_to_OTPCodeFragment"
+            app:destination="@id/OTPCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OTPCodeFragment"
+        android:name="com.example.testapp.ui.recover.OTP_code.OTPCodeFragment"
+        android:label="fragment_otp_code"
+        tools:layout="@layout/fragment_otp_code" >
+        <action
+            android:id="@+id/action_OTPCodeFragment_to_passwordFragment"
+            app:destination="@id/passwordFragment" />
+        <action
+            android:id="@+id/action_OTPCodeFragment_to_mailFragment"
+            app:destination="@id/mailFragment"
+            app:popUpTo="@id/OTPCodeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.example.testapp.ui.recover.password.PasswordFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_password" >
+        <action
+            android:id="@+id/action_passwordFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/passwordFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

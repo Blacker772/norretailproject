@@ -92,7 +92,7 @@ class SignUpFragment : Fragment() {
             }
 
             btBack.setOnClickListener {
-                findNavController().popBackStack(R.id.loginFragment, false)
+                findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
             }
         }
     }
@@ -148,7 +148,7 @@ class SignUpFragment : Fragment() {
                 is UiStateSignUp.Data -> {
                     progressBar.isVisible = false
                     onShowToast("Аккаунт успешно создан!")
-                    findNavController().popBackStack(R.id.loginFragment, false)
+                    findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                 }
 
                 else -> {

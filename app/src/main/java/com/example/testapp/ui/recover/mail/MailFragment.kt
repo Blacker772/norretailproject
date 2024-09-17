@@ -54,7 +54,7 @@ class MailFragment : Fragment() {
                 findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
             }
             btBack.setOnClickListener {
-                findNavController().popBackStack(R.id.loginFragment, false)
+                findNavController().navigate(R.id.action_mailFragment_to_loginFragment)
             }
         }
     }
