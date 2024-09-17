@@ -10,15 +10,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class MailViewModel @Inject constructor(
-    private val repository: Repository
-): ViewModel() {
+    private val repository: Repository,
+) : ViewModel() {
 
     private val _state = MutableStateFlow<UiStateMail>(UiStateMail.None)
     val state: StateFlow<UiStateMail> get() = _state
 
-    fun checkMail(mail: String){
+    fun checkMail(mail: String) {
         viewModelScope.launch {
             repository.checkMailRepo(mail)
                 .onStart {
@@ -27,8 +28,8 @@ class MailViewModel @Inject constructor(
                 .catch { e ->
                     _state.value = UiStateMail.Error(e.message)
                 }
-                .collect{
-                    _state.value = UiStateMail.Data(it)
+                .collect { result ->
+                    _state.value = result
                 }
         }
     }

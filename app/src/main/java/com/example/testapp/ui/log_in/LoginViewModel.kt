@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
 
     fun getLogin(user: AuthModel) {
         viewModelScope.launch {
-            repository.getLoginRepo1(AuthModel(user.login, user.password))
+            repository.getLoginRepo(AuthModel(user.login, user.password))
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
                 }

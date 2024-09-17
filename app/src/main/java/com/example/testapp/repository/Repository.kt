@@ -9,6 +9,7 @@ import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 import com.example.testapp.data.response.ApiService
 import com.example.testapp.ui.log_in.UiStateLogIn
+import com.example.testapp.ui.recover.mail.UiStateMail
 import com.example.testapp.ui.sign_up.UiStateSignUp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,25 +23,7 @@ class Repository @Inject constructor(
     //API
     //Запрос на вход по логину и паролю
     //LoginFragment
-    fun getLoginRepo(user: AuthModel): Flow<UserModel> = flow {
-        try {
-            val result = apiService.getLogin(user)
-            if (result.isSuccessful) {
-                val requestBody = result.body()
-                if (requestBody != null) {
-                    emit(requestBody)
-                } else {
-                    throw Exception("response body is null")
-                }
-            } else {
-                throw Exception("error ${result.code()}: ${result.message()}")
-            }
-        } catch (e: Exception) {
-            throw Exception(e.message ?: "an unknown error occurred")
-        }
-    }
-
-    fun getLoginRepo1(user: AuthModel): Flow<UiStateLogIn> = flow {
+    fun getLoginRepo(user: AuthModel): Flow<UiStateLogIn> = flow {
         try {
             val result = apiService.getLogin(user)
             if (result.isSuccessful) {
@@ -60,14 +43,14 @@ class Repository @Inject constructor(
     }
 
     //БД
-    //Получение пользователя по логину для авторизации(есть ли такой пользователь в бд)
+    //Получение пользователя по логину для авторизации(есть ли такой пользователь в БД)
     //LoginFragment
     suspend fun getUserByLoginAuth(login: String): SaveUser? {
         return dao.getUserByLoginAuth(login)
     }
 
     //БД
-    //Метод для сохранения логина и пароля при входе(если нет такого пользователя в бд, то сохраняем)
+    //Метод для сохранения логина и пароля при входе(если нет такого пользователя в БД, то сохраняем)
     //LoginFragment
     suspend fun saveUserAuth(user: SaveUser) {
         dao.saveUser(user)
@@ -105,21 +88,22 @@ class Repository @Inject constructor(
     //API
     //Проверка почты(имеется ли такая почта на сервере)
     //MailFragment
-    fun checkMailRepo(mail: String): Flow<CreateUserModel> = flow {
+    fun checkMailRepo(mail: String): Flow<UiStateMail> = flow {
         try {
             val result = apiService.checkMail(mail)
             if (result.isSuccessful) {
                 val requestBody = result.body()
                 if (requestBody != null) {
-                    emit(requestBody)
+                    emit(UiStateMail.Data(requestBody))
                 } else {
                     throw Exception("response body is null")
                 }
             } else {
-                throw Exception("error ${result.code()}: ${result.message()}")
+                val errorBody = result.errorBody()?.string() ?: "unknown error"
+                emit(UiStateMail.Error(errorBody))
             }
         } catch (e: Exception) {
-            throw Exception(e.message ?: "an unknown error occurred")
+            emit(UiStateMail.Error(e.message))
         }
     }
 }

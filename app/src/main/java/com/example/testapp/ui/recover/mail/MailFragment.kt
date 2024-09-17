@@ -69,20 +69,25 @@ class MailFragment : Fragment() {
 
     //Метод, обрабатывающий состояния UiState
     private fun onChangeStateMail(state: UiStateMail) {
-        when (state) {
-            is UiStateMail.Loading -> {
-                binding?.progressBar?.isVisible = state.isLoading
-            }
-            is UiStateMail.Error -> {
-                binding?.progressBar?.isVisible = false
-                Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-            }
-            is UiStateMail.Data -> {
-                binding?.progressBar?.isVisible = false
-                findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
-            }
-            else -> {
-                binding?.progressBar?.isVisible = false
+        binding?.apply {
+            when (state) {
+                is UiStateMail.Loading -> {
+                    progressBar.isVisible = state.isLoading
+                }
+
+                is UiStateMail.Error -> {
+                    progressBar.isVisible = false
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
+                }
+
+                is UiStateMail.Data -> {
+                    progressBar.isVisible = false
+                    findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
+                }
+
+                else -> {
+                    progressBar.isVisible = false
+                }
             }
         }
     }
