@@ -30,7 +30,11 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding? = null
     private val viewModel by viewModels<LoginViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding?.root
     }
@@ -103,7 +107,6 @@ class LoginFragment : Fragment() {
 
     //Метод, обрабатывающий состояния UiState
     private fun onChangeStateLogIn(state: UiStateLogIn) {
-        Log.d("NavigationDebug", "onChangeState called with state: $state")
         binding?.apply {
             when (state) {
                 is UiStateLogIn.Loading -> {
@@ -119,11 +122,7 @@ class LoginFragment : Fragment() {
 
                 is UiStateLogIn.Data -> {
                     progressBar.isVisible = false
-                    val currentDestination = findNavController().currentDestination?.id
-                    Log.d("NavigationDebug", "Current destination: $currentDestination")
-//                    if (findNavController().currentDestination?.id == R.id.loginFragment) {
-                        findNavController().navigate(R.id.action_loginFragment_to_viewPagerFragment)
-//                    }
+                    findNavController().navigate(R.id.action_loginFragment_to_viewPagerFragment)
                 }
 
                 else -> {

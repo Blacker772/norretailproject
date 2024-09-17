@@ -20,15 +20,15 @@ class OTPCodeFragment : Fragment() {
         return binding?.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.btApply?.setOnClickListener {
-            findNavController().navigate(R.id.action_OTPCodeFragment_to_passwordFragment)
-        }
         binding?.btBack?.setOnClickListener {
             findNavController().navigate(R.id.action_OTPCodeFragment_to_mailFragment)
+        }
+
+        binding?.btApply?.setOnClickListener {
+            findNavController().navigate(R.id.action_OTPCodeFragment_to_passwordFragment)
         }
     }
 

@@ -25,10 +25,10 @@ class MailViewModel @Inject constructor(
                     _state.value = UiStateMail.Loading(true)
                 }
                 .catch { e ->
-                    _state.value = UiStateMail.Error(e.message, false)
+                    _state.value = UiStateMail.Error(e.message)
                 }
                 .collect{
-                    _state.value = UiStateMail.Data(it, false)
+                    _state.value = UiStateMail.Data(it)
                 }
         }
     }

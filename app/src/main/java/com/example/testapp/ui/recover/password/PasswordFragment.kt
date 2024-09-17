@@ -23,11 +23,13 @@ class PasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.btSave?.setOnClickListener {
-            Toast.makeText(requireContext(), "Пароль успешно изменен!", Toast.LENGTH_SHORT).show()
+
+        binding?.btBack?.setOnClickListener {
             findNavController().navigate(R.id.action_passwordFragment_to_loginFragment)
         }
-        binding?.btBack?.setOnClickListener {
+
+        binding?.btSave?.setOnClickListener {
+            Toast.makeText(requireContext(), "Пароль успешно изменен!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_passwordFragment_to_loginFragment)
         }
     }

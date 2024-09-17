@@ -23,7 +23,6 @@ class SignUpViewModel @Inject constructor(
     private val _state = MutableStateFlow<UiStateSignUp>(UiStateSignUp.None)
     val state: StateFlow<UiStateSignUp> get() = _state
 
-    //API
     fun createUser(
         login: String, password: String, family: String,
         name: String, lastname: String, email: String,

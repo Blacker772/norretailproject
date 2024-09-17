@@ -18,7 +18,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentSignUpBinding
-import com.example.testapp.ui.log_in.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,11 +28,7 @@ class SignUpFragment : Fragment() {
     private var binding: FragmentSignUpBinding? = null
     private val viewModel by viewModels<SignUpViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding?.root
     }

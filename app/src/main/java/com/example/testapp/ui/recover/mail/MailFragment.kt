@@ -74,11 +74,11 @@ class MailFragment : Fragment() {
                 binding?.progressBar?.isVisible = state.isLoading
             }
             is UiStateMail.Error -> {
+                binding?.progressBar?.isVisible = false
                 Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                binding?.progressBar?.isVisible = state.isLoading
             }
             is UiStateMail.Data -> {
-                binding?.progressBar?.isVisible = state.isLoading
+                binding?.progressBar?.isVisible = false
                 findNavController().navigate(R.id.action_mailFragment_to_OTPCodeFragment)
             }
             else -> {
