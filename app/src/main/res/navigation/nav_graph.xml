@@ -25,7 +25,11 @@
         android:id="@+id/viewPagerFragment"
         android:name="com.example.testapp.ui.menu.viewpager.ViewPagerFragment"
         android:label="fragment_viewpager"
-        tools:layout="@layout/fragment_viewpager" />
+        tools:layout="@layout/fragment_viewpager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_detailsRouteFragment"
+            app:destination="@id/detailsRouteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.testapp.ui.sign_up.SignUpFragment"
@@ -79,4 +83,15 @@
                 app:destination="@id/OTPCodeFragment" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/detailsRouteFragment"
+        android:name="com.example.testapp.ui.menu.pages.route.details.DetailsRouteFragment"
+        android:label="fragment_details_route"
+        tools:layout="@layout/fragment_details_route" >
+        <action
+            android:id="@+id/action_detailsRouteFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:popUpTo="@id/detailsRouteFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

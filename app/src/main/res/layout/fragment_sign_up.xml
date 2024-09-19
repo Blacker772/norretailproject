@@ -1,189 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.sign_up.SignUpFragment">
 
-   <com.google.android.material.appbar.AppBarLayout
-       android:id="@+id/appBar"
-       android:layout_width="match_parent"
-       android:layout_height="70dp"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintBottom_toTopOf="@id/tiLogin"
-       android:background="@color/blue">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/blue">
 
-       <androidx.appcompat.widget.Toolbar
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-               <ImageButton
-                   android:id="@+id/btBack"
-                   android:importantForAccessibility="no"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"
-                   app:layout_constraintBottom_toBottomOf="parent"
-                   android:background="@drawable/ic_back"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_gravity="center|start" />
+                <ImageButton
+                    android:id="@+id/btBack"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="8dp" />
 
-               <TextView
-                   android:id="@+id/tvRegister"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/sign"
-                   app:layout_constraintStart_toEndOf="@id/btBack"
-                   app:layout_constraintTop_toTopOf="@id/btBack"
-                   app:layout_constraintBottom_toBottomOf="@id/btBack"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintHorizontal_bias="0.42"
-                   android:fontFamily="@font/roboto_medium_italic"
-                   android:textColor="@color/white"
-                   android:textSize="28sp" />
-           </androidx.constraintlayout.widget.ConstraintLayout>
-       </androidx.appcompat.widget.Toolbar>
-   </com.google.android.material.appbar.AppBarLayout>
+                <TextView
+                    android:id="@+id/tvRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Регистрация"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:fontFamily="@font/roboto_medium_italic"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiLogin"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="10dp"
-        android:hint="@string/login"
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/btRegisterUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etLogin"
-            android:drawableStart="@drawable/ic_login"
-            android:imeOptions="actionNext"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiPassword"
-        android:layout_marginTop="20dp"
-        android:hint="@string/password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiLogin"
-        android:layout_marginHorizontal="10dp"
-        app:passwordToggleEnabled="true"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiLogin"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/login"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/appBar">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            android:drawableStart="@drawable/ic_password"
-            android:inputType="textPassword"
-            android:imeOptions="actionNext"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLogin"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_login"
+                    android:imeOptions="actionNext"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiPassword2"
-        android:layout_marginTop="20dp"
-        android:hint="@string/apply_pass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiPassword"
-        android:layout_marginHorizontal="10dp"
-        app:passwordToggleEnabled="true"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiPassword"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/password"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiLogin"
+                app:passwordToggleEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPasswordCheck"
-            android:drawableStart="@drawable/ic_password"
-            android:inputType="textPassword"
-            android:imeOptions="actionNext"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiMail"
-        android:layout_marginTop="20dp"
-        android:hint="@string/Mail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiPassword2"
-        android:layout_marginHorizontal="10dp"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiPassword2"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/apply_pass"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiPassword"
+                app:passwordToggleEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etMail"
-            android:drawableStart="@drawable/ic_mail"
-            android:imeOptions="actionNext"
-            android:inputType="textEmailAddress"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPasswordCheck"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiSurname"
-        android:layout_marginTop="20dp"
-        android:hint="@string/Surname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiMail"
-        android:layout_marginHorizontal="10dp"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiMail"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/Mail"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiPassword2">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etFamily"
-            android:drawableStart="@drawable/ic_family"
-            android:imeOptions="actionNext"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMail"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_mail"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiName"
-        android:layout_marginTop="20dp"
-        android:hint="@string/Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiSurname"
-        android:layout_marginHorizontal="10dp"
-        android:imeOptions="actionNext"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiSurname"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/Surname"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiMail">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etName"
-            android:drawableStart="@drawable/ic_name"
-            android:imeOptions="actionNext"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFamily"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_family"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiPatronymic"
-        android:layout_marginTop="20dp"
-        android:hint="@string/Patronymic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tiName"
-        android:layout_marginHorizontal="10dp"
-        android:imeOptions="actionDone"
-        style="@style/CustomTextInputLayout">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiName"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/Name"
+                android:imeOptions="actionNext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiSurname">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etLastname"
-            android:drawableStart="@drawable/ic_lastname"
-            android:imeOptions="actionDone"
-            style="@style/CustomTextInputEditText"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_name"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiPatronymic"
+                style="@style/CustomTextInputLayout"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/Patronymic"
+                android:imeOptions="actionDone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tiName">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLastname"
+                    style="@style/CustomTextInputEditText"
+                    android:drawableStart="@drawable/ic_lastname"
+                    android:imeOptions="actionDone" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
     <com.google.android.material.button.MaterialButton
@@ -197,21 +212,22 @@
         android:text="@string/SignUp"
         android:textSize="20sp"
         app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
         app:icon="@drawable/ic_add_user"
         app:iconGravity="textStart"
-        app:iconSize="25dp"/>
+        app:iconSize="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

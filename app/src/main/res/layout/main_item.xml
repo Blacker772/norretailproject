@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/cardMarket"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="75dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="5dp"
     app:cardCornerRadius="10dp"
-    app:strokeColor="#304FFE"
-    app:strokeWidth="1dp"
-    android:elevation="10dp"
-    android:layout_marginVertical="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:cardElevation="3dp"
+    app:strokeColor="#66000000"
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,62 +20,65 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/sivIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_market"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_launcher_background"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@id/sivIcon"
             app:layout_constraintTop_toTopOf="@id/sivIcon"
-            android:text="КОД 1234"
-            android:textStyle="bold"
-            android:layout_marginStart="7dp"/>
+            tools:text="КОД 1234" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCode"
             app:layout_constraintStart_toEndOf="@id/tvCode"
-            app:layout_constraintTop_toTopOf="@id/sivIcon"
-            android:layout_marginStart="10dp"
-            android:text="Наименование ТТ"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvPlan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="План"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/sivIcon"
-            app:layout_constraintBottom_toBottomOf="@id/sivIcon"
-            android:text="Адрес Наименования"
-            android:textStyle="bold"
-            android:layout_marginStart="7dp"/>
+            app:layout_constraintTop_toTopOf="@id/tvCode"
+            tools:text="Наим. ТТ" />
 
         <TextView
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvName"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvName"
+            tools:text="План" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/sivIcon"
-            android:text="Сумма к продаже"
-            android:textStyle="bold"/>
+            app:layout_constraintStart_toEndOf="@id/sivIcon"
+            tools:text="Адрес Наим." />
 
+        <TextView
+            android:id="@+id/tvSale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvAddress"
+            tools:text="Сумма к продаже" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.google.android.material.card.MaterialCardView>

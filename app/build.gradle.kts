@@ -5,6 +5,7 @@ plugins {
     base
     `project-report`
     kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -13,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.testapp"
-        minSdk = 27
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -63,6 +64,7 @@ tasks.withType<HtmlDependencyReportTask>() {
 //noinspection UseTomlInstead
 dependencies {
 
+    implementation(libs.car.ui.lib)
     //Retrofit
     val retrofitVersion = "2.11.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -131,4 +133,6 @@ dependencies {
     //LottieAnimation
     val lottieVersion = "6.5.2"
     implementation("com.airbnb.android:lottie:$lottieVersion")
+
+    implementation("com.google.android.material:material:1.12.0")
 }
