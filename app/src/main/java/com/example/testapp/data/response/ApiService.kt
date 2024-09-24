@@ -16,9 +16,9 @@ interface ApiService {
     @GET("/channels")
     suspend fun getChannels(): Response<List<ChannelsModel>>
 
-    //Вход по логину и паролю
+    //Авторизация пользователя
     @POST("/login")
-    suspend fun getLogin(@Body auth: AuthModel): Response<UserModel>
+    suspend fun authorization(@Body auth: AuthModel): Response<UserModel>
 
     //Регистрация пользователя
     @POST("/users")

@@ -22,9 +22,9 @@ class LoginViewModel @Inject constructor(
     private val _state = MutableStateFlow<UiStateLogIn>(UiStateLogIn.None)
     val state: StateFlow<UiStateLogIn> get() = _state
 
-    fun getLogin(user: AuthModel) {
+    fun authorization(user: AuthModel) {
         viewModelScope.launch {
-            repository.getLoginRepo(AuthModel(user.login, user.password))
+            repository.authorizationRepo(AuthModel(user.login, user.password))
                 .onStart {
                     _state.value = UiStateLogIn.Loading(true)
                 }

@@ -23,9 +23,9 @@ class Repository @Inject constructor(
     //API
     //Запрос на вход по логину и паролю
     //LoginFragment
-    fun getLoginRepo(user: AuthModel): Flow<UiStateLogIn> = flow {
+    fun authorizationRepo(user: AuthModel): Flow<UiStateLogIn> = flow {
         try {
-            val result = apiService.getLogin(user)
+            val result = apiService.authorization(user)
             if (result.isSuccessful) {
                 val requestBody = result.body()
                 if (requestBody != null) {

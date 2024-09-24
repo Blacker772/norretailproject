@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
                         if (checkBox.isChecked) {
                             handleSaveData(result, login, password)
                         } else {
-                            viewModel.getLogin(AuthModel(login, password))
+                            viewModel.authorization(AuthModel(login, password))
                         }
                     } catch (e: Exception) {
                         showToast(e.message.toString())
@@ -87,13 +87,13 @@ class LoginFragment : Fragment() {
     private fun handleSaveData(result: SaveUser?, login: String, password: String) {
         if (result != null) {
             if (result.password == password) {
-                viewModel.getLogin(AuthModel(login, password))
+                viewModel.authorization(AuthModel(login, password))
             } else {
                 showToast("Неверный логин и/или пароль")
             }
         } else {
             viewModel.saveUserAuth(SaveUser(null, login, password))
-            viewModel.getLogin(AuthModel(login, password))
+            viewModel.authorization(AuthModel(login, password))
         }
     }
 

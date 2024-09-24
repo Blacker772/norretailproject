@@ -72,6 +72,7 @@ tasks.withType<HtmlDependencyReportTask>() {
 //noinspection UseTomlInstead
 dependencies {
 
+    //noinspection GradleDependency
     implementation ("com.yandex.android:maps.mobile:4.8.0-full")
 
     implementation(libs.car.ui.lib)
@@ -143,6 +144,4 @@ dependencies {
     //LottieAnimation
     val lottieVersion = "6.5.2"
     implementation("com.airbnb.android:lottie:$lottieVersion")
-
-    implementation("com.google.android.material:material:1.12.0")
 }
