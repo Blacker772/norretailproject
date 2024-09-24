@@ -15,7 +15,13 @@ val mapkitApiKey: String by lazy {
     file("local.properties").inputStream().use { properties.load(it) }
     properties.getProperty("MAPKIT_API_KEY") ?: ""
 }
+val apiServer: String by lazy {
+    val properties = Properties()
+    file("local.properties").inputStream().use { properties.load(it) }
+    properties.getProperty("API_SERVER") ?: ""
+}
 
 allprojects {
     ext["mapkitApiKey"] = mapkitApiKey
+    ext["apiServer"] = apiServer
 }

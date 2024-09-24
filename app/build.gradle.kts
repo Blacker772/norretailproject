@@ -26,6 +26,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "MAPKIT_API_KEY", "\"${rootProject.extra["mapkitApiKey"]}\"")
+        buildConfigField("String", "API_SERVER", "\"${rootProject.extra["apiServer"]}\"")
     }
 
     buildTypes {
