@@ -5,54 +5,91 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentYandexMapBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Point
+import com.yandex.mapkit.layers.GeoObjectTapEvent
+import com.yandex.mapkit.layers.GeoObjectTapListener
+import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
+import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.mapview.MapView
 
-@Suppress("DEPRECATION")
 class YandexMapFragment : Fragment() {
 
+    private var binding: FragmentYandexMapBinding? = null
+    private var mapView: MapView? = null
 
-    private var bidning: FragmentYandexMapBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         MapKitFactory.initialize(requireContext())
-        bidning = FragmentYandexMapBinding.inflate(inflater, container, false)
-        return bidning?.root
+        binding = FragmentYandexMapBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val map = bidning?.yandexMap?.map
-        map?.move(CameraPosition(
-            Point(69.3558, 88.1893),
-            13f,
-            0f,
-            0f
-        ))
+
+        //Инициализация карты
+        mapView = binding?.yandexMap
+
+        //Фокус карты на Норильск
+        mapView?.mapWindow?.map?.move(
+            CameraPosition(
+                Point(69.3558, 88.1893),
+                13f,
+                0f,
+                0f
+            )
+        )
+
+        //Слушатель карты
+        val geoObjectTapListener = GeoObjectTapListener {
+            val dialog = BottomSheetDialog(requireContext())
+            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_object, null)
+            dialog.setContentView(dialogView)
+
+            val tvName = dialogView.findViewById<TextView>(R.id.tvObjectName)
+            val tvDescription = dialogView.findViewById<TextView>(R.id.tvObjectAddress)
+            val btClose = dialogView.findViewById<Button>(R.id.closeObjectButton)
+
+            tvName.text = it.geoObject.name
+            tvDescription.text = it.geoObject.descriptionText
+            dialog.show()
+
+            btClose.setOnClickListener {
+                dialog.dismiss()
+            }
+            true
+        }
+
+        mapView?.mapWindow?.map?.addTapListener(geoObjectTapListener)
     }
 
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        bidning?.yandexMap?.onStart()
+        mapView?.onStart()
     }
 
     override fun onStop() {
-        bidning?.yandexMap?.onStop()
+        mapView?.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        bidning = null
+        binding = null
+        mapView = null
     }
 }

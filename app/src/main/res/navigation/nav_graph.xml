@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/yandexMapFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.testapp.ui.log_in.LoginFragment"
