@@ -1,7 +1,7 @@
 package com.example.testapp.ui.log_in
 
+import android.animation.ValueAnimator
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +16,8 @@ import com.example.testapp.R
 import com.example.testapp.data.auth.AuthModel
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.databinding.FragmentLoginBinding
-import com.example.testapp.ui.menu.viewpager.ViewPagerFragment
-import com.example.testapp.ui.recover.mail.MailFragment
-import com.example.testapp.ui.sign_up.SignUpFragment
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

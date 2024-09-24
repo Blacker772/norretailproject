@@ -1,3 +1,5 @@
+import java.util.Properties
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id("com.android.application") version "8.3.2" apply false
@@ -6,4 +8,14 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.46.1" apply false
     kotlin("kapt") version "1.9.22" //1.9.10
     kotlin("jvm") version "1.9.22"
+}
+
+val mapkitApiKey: String by lazy {
+    val properties = Properties()
+    file("local.properties").inputStream().use { properties.load(it) }
+    properties.getProperty("MAPKIT_API_KEY") ?: ""
+}
+
+allprojects {
+    ext["mapkitApiKey"] = mapkitApiKey
 }

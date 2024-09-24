@@ -1,4 +1,4 @@
-package com.example.testapp.ui.menu.pages.route.details
+package com.example.testapp.ui.menu.viewpager.pages.route.details
 
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentDetailsRouteBinding
-import com.example.testapp.ui.menu.pages.route.model.RouteModel
+import com.example.testapp.data.pages.RouteModel
 
 
 class DetailsRouteFragment : Fragment() {
@@ -34,6 +34,10 @@ class DetailsRouteFragment : Fragment() {
             findNavController().navigate(R.id.action_detailsRouteFragment_to_viewPagerFragment)
         }
 
+        binding?.btAdd?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsRouteFragment_to_createOrderFragment)
+        }
+
         //Получение данных из аргументов
         val route = arguments?.let {
             if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -45,14 +49,11 @@ class DetailsRouteFragment : Fragment() {
 
         route?.let {routeData ->
             binding?.apply {
-                sivArena.load(routeData.icon)
-                tvCode.text = "Код: ${routeData.code}"
-                tvName.text = "Наименование: ${routeData.name}"
-                tvAddress.text = "Адрес: ${routeData.address}"
-                tvPrice.text = "План: ${routeData.price}"
-                tvSale.text = "Продано: ${routeData.sale}"
-                tvTimeWork.text = "Время работы: ${routeData.time}"
-                tvDayWork.text = "Дни работы: ${routeData.day}"
+                sivIcon.load(routeData.icon)
+                tvName.text = routeData.name
+                tvAddress.text = routeData.address
+                tvWorkTime.text = "Режим работы: ${routeData.day}, ${routeData.time}"
+                tvContacts.text = "Контакты: ${routeData.contacts}"
             }
         }
     }

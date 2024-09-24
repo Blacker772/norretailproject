@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -12,6 +14,10 @@ android {
     namespace = "com.example.testapp"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.example.testapp"
         minSdk = 28
@@ -19,6 +25,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "MAPKIT_API_KEY", "\"${rootProject.extra["mapkitApiKey"]}\"")
     }
 
     buildTypes {
@@ -64,6 +71,8 @@ tasks.withType<HtmlDependencyReportTask>() {
 //noinspection UseTomlInstead
 dependencies {
 
+    implementation ("com.yandex.android:maps.mobile:4.8.0-full")
+
     implementation(libs.car.ui.lib)
     //Retrofit
     val retrofitVersion = "2.11.0"
@@ -71,12 +80,12 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     //Navigation
-    val navVersion = "2.8.0"
+    val navVersion = "2.8.1"
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     //lifecycle
-    val lifecycleVersion = "2.8.5"
+    val lifecycleVersion = "2.8.6"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 

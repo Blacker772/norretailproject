@@ -1,4 +1,4 @@
-package com.example.testapp.ui.menu.pages.route.model
+package com.example.testapp.data.pages
 
 
 import android.os.Parcelable
@@ -13,5 +13,6 @@ class RouteModel @Inject constructor(
     val price: String,
     val sale: String,
     val day: String,
-    val time: String
+    val time: String,
+    val contacts: String
 ): Parcelable

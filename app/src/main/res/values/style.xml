@@ -25,6 +25,9 @@
     </style>
 
 
+
+
+
     <!-- Стиль для TextInputLayout -->
     <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>

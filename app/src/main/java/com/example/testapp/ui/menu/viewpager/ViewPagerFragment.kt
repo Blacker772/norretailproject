@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.GravityCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -43,6 +44,10 @@ class ViewPagerFragment : Fragment() {
         //привязка адаптера к viewPager2
         binding?.viewPager2?.adapter = vpAdapter
 
+
+        binding?.btAdd?.setOnClickListener {
+            findNavController().navigate(R.id.action_viewPagerFragment_to_yandexMapFragment)
+        }
 
         //синхронизация меню с перелистыванием фрагментов
         binding?.viewPager2?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

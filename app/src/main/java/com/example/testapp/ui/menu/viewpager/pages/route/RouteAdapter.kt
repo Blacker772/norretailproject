@@ -1,10 +1,11 @@
-package com.example.testapp.ui.menu.pages.route.model
+package com.example.testapp.ui.menu.viewpager.pages.route
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
+import com.example.testapp.data.pages.RouteModel
 import com.example.testapp.databinding.MainItemBinding
 
 class RouteAdapter: Adapter<RouteAdapter.RouteViewHolder>() {
