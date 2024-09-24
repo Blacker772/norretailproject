@@ -1,7 +1,7 @@
 package com.example.testapp.di
 
+import com.example.testapp.BuildConfig
 import com.example.testapp.data.response.ApiService
-import com.example.testapp.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +23,7 @@ object NetworkModule {
         okHttpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.API_SERVER)
             .addConverterFactory(gsonConverterFactory)
             .client(okHttpClient)
             .build()
