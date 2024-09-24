@@ -26,11 +26,7 @@ class YandexMapFragment : Fragment() {
     private lateinit var geoObjectTapListener: GeoObjectTapListener
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         MapKitFactory.initialize(requireContext())
         binding = FragmentYandexMapBinding.inflate(inflater, container, false)
         return binding?.root
