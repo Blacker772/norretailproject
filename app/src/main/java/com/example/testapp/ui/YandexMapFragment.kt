@@ -23,7 +23,7 @@ import com.yandex.mapkit.mapview.MapView
 class YandexMapFragment : Fragment() {
 
     private var binding: FragmentYandexMapBinding? = null
-    private var mapView: MapView? = null
+    private lateinit var geoObjectTapListener: GeoObjectTapListener
 
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ class YandexMapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //Инициализация карты
-        mapView = binding?.yandexMap
+        val mapView = binding?.yandexMap
 
         //Фокус карты на Норильск
         mapView?.mapWindow?.map?.move(
@@ -53,7 +53,7 @@ class YandexMapFragment : Fragment() {
         )
 
         //Слушатель карты
-        val geoObjectTapListener = GeoObjectTapListener {
+        geoObjectTapListener = GeoObjectTapListener {
             val dialog = BottomSheetDialog(requireContext())
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_object, null)
             dialog.setContentView(dialogView)
@@ -78,18 +78,18 @@ class YandexMapFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         MapKitFactory.getInstance().onStart()
-        mapView?.onStart()
+        binding?.yandexMap?.onStart()
     }
 
     override fun onStop() {
-        mapView?.onStop()
+        binding?.yandexMap?.onStop()
         MapKitFactory.getInstance().onStop()
         super.onStop()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        geoObjectTapListener.let { binding?.yandexMap?.mapWindow?.map?.removeTapListener(it) }
         binding = null
-        mapView = null
     }
 }
