@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/yandexMapFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.testapp.ui.log_in.LoginFragment"
@@ -113,9 +113,9 @@
     </fragment>
     <fragment
         android:id="@+id/yandexMapFragment"
-        android:name="com.example.testapp.ui.YandexMapFragment"
+        android:name="com.example.testapp.ui.menu.viewpager.pages.route.points.PointFragment"
         android:label="fragment_yandex_map"
-        tools:layout="@layout/fragment_yandex_map" >
+        tools:layout="@layout/fragment_point" >
         <action
             android:id="@+id/action_yandexMapFragment_to_viewPagerFragment"
             app:destination="@id/viewPagerFragment"

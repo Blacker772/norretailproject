@@ -75,6 +75,8 @@ dependencies {
     //noinspection GradleDependency
     implementation ("com.yandex.android:maps.mobile:4.8.0-full")
 
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
     implementation(libs.car.ui.lib)
     //Retrofit
     val retrofitVersion = "2.11.0"
