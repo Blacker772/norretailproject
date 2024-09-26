@@ -4,6 +4,7 @@ import com.example.testapp.data.createuser.CreateUserModel
 import com.example.testapp.data.auth.UserModel
 import com.example.testapp.data.channels.ChannelsModel
 import com.example.testapp.data.createuser.ErrorCreateUser
+import com.example.testapp.data.pages.ClientModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,4 +28,7 @@ interface ApiService {
     //Проверка почты(имеется ли такая почта на сервере)
     @GET("/user/find/email")
     suspend fun checkMail(@Query("email") mail: String): Response<CreateUserModel>
+
+    @GET("/clients")
+    suspend fun getClients(): Response<List<ClientModel>>
 }

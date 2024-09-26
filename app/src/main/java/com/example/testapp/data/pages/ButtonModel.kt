@@ -1,4 +1,4 @@
-package com.example.testapp.ui.menu.header
+package com.example.testapp.data.pages
 
 import javax.inject.Inject
 

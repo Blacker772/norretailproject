@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentDetailsRouteBinding
-import com.example.testapp.data.pages.RouteModel
+import com.example.testapp.data.pages.ClientModel
 
 
 class DetailsRouteFragment : Fragment() {
@@ -41,19 +40,16 @@ class DetailsRouteFragment : Fragment() {
         //Получение данных из аргументов
         val route = arguments?.let {
             if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable("route", RouteModel::class.java)
+                it.getParcelable("client", ClientModel::class.java)
             } else {
-                it.getParcelable("route")
+                it.getParcelable("client")
             }
         }
 
         route?.let {routeData ->
             binding?.apply {
-                sivIcon.load(routeData.icon)
                 tvName.text = routeData.name
-                tvAddress.text = routeData.address
-                tvWorkTime.text = "Режим работы: ${routeData.day}, ${routeData.time}"
-                tvContacts.text = "Контакты: ${routeData.contacts}"
+                tvAddress.text = routeData.deliveryAddress
             }
         }
     }

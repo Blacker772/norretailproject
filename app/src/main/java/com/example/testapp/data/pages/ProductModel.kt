@@ -1,4 +1,4 @@
-package com.example.testapp.ui.menu.viewpager.pages.route.details.create_order
+package com.example.testapp.data.pages
 
 import javax.inject.Inject
 

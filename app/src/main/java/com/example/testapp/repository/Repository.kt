@@ -1,14 +1,14 @@
 package com.example.testapp.repository
 
+import android.util.Log
 import com.example.testapp.data.auth.AuthModel
-import com.example.testapp.data.auth.UserModel
 import com.example.testapp.data.createuser.CreateUserModel
-import com.example.testapp.data.createuser.ErrorCreateUser
 import com.example.testapp.data.database.DAO
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 import com.example.testapp.data.response.ApiService
 import com.example.testapp.ui.log_in.UiStateLogIn
+import com.example.testapp.ui.menu.viewpager.pages.route.UiStateRoute
 import com.example.testapp.ui.recover.mail.UiStateMail
 import com.example.testapp.ui.sign_up.UiStateSignUp
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val apiService: ApiService,
-    private val dao: DAO
+    private val dao: DAO,
 ) {
 
     //API
@@ -104,6 +104,25 @@ class Repository @Inject constructor(
             }
         } catch (e: Exception) {
             emit(UiStateMail.Error(e.message))
+        }
+    }
+
+    fun getClientsRepo(): Flow<UiStateRoute> = flow {
+        try {
+            val result = apiService.getClients()
+            if (result.isSuccessful) {
+                val requestBody = result.body()
+                if (requestBody != null) {
+                    emit(UiStateRoute.Data(requestBody))
+                } else {
+                    throw Exception("response body is null")
+                }
+            } else {
+                val errorBody = result.errorBody()?.string() ?: "unknown error"
+                emit(UiStateRoute.Error(errorBody))
+            }
+        } catch (e: Exception) {
+            emit(UiStateRoute.Error(e.message))
         }
     }
 }

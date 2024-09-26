@@ -2,23 +2,16 @@ package com.example.testapp.ui.menu.viewpager.pages.route
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
-import coil.load
-import com.example.testapp.data.pages.RouteModel
+import com.example.testapp.data.pages.ClientModel
 import com.example.testapp.databinding.MainItemBinding
 
-class RouteAdapter: Adapter<RouteAdapter.RouteViewHolder>() {
+class RouteAdapter : ListAdapter<ClientModel, RouteAdapter.RouteViewHolder>(DIFF_UTIL) {
 
-    private val listOfRoutes = mutableListOf<RouteModel>()
-    fun updateRoutesList(newList: List<RouteModel>){
-        listOfRoutes.clear()
-        listOfRoutes.addAll(newList)
-        notifyDataSetChanged()
-    }
-
-    private var onItemClick: ((news: RouteModel) -> Unit)? = null
-    fun onItemClickListener(onItemClick: (news: RouteModel) -> Unit) {
+    private var onItemClick: ((client: ClientModel) -> Unit)? = null
+    fun onItemClickListener(onItemClick: (client: ClientModel) -> Unit) {
         this.onItemClick = onItemClick
     }
 
@@ -28,26 +21,40 @@ class RouteAdapter: Adapter<RouteAdapter.RouteViewHolder>() {
         return RouteViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-       return listOfRoutes.size
-    }
-
     override fun onBindViewHolder(holder: RouteViewHolder, position: Int) {
-        holder.bind(listOfRoutes[position], onItemClick)
+        holder.bind(currentList[position], onItemClick)
     }
 
-    inner class RouteViewHolder(private val binding: MainItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: RouteModel, onItemClick: ((news: RouteModel) -> Unit)?){
+    inner class RouteViewHolder(private val binding: MainItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: ClientModel, onItemClick: ((client: ClientModel) -> Unit)?) {
             binding.apply {
-                sivIcon.load(data.icon)
-                tvCode.text = data.code
+                tvCode.text = data.nUser
                 tvName.text = data.name
-                tvAddress.text = data.address
-                tvPrice.text = data.price
-                tvSale.text = data.sale
+                tvAddress.text = data.deliveryAddress
                 cardMarket.setOnClickListener {
                     onItemClick?.invoke(data)
                 }
+            }
+        }
+    }
+
+    companion object {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<ClientModel>() {
+            override fun areItemsTheSame(
+                oldItem: ClientModel,
+                newItem: ClientModel,
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(
+                oldItem: ClientModel,
+                newItem: ClientModel,
+            ): Boolean {
+                return oldItem.name == newItem.name &&
+                        oldItem.inn == newItem.inn &&
+                        oldItem.kpp == newItem.kpp
             }
         }
     }

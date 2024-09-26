@@ -2,7 +2,7 @@ package com.example.testapp.ui.menu.viewpager
 
 import androidx.lifecycle.ViewModel
 import com.example.testapp.R
-import com.example.testapp.ui.menu.header.ButtonModel
+import com.example.testapp.data.pages.ButtonModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
