@@ -1,6 +1,6 @@
 package com.example.testapp.ui.recover.mail
 
-import com.example.testapp.data.createuser.CreateUserModel
+import com.example.testapp.data.models.createuser.CreateUserModel
 
 sealed class UiStateMail {
     data class Loading(val isLoading: Boolean): UiStateMail()

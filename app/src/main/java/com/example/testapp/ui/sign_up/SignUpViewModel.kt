@@ -2,12 +2,9 @@ package com.example.testapp.ui.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testapp.data.createuser.CreateUserModel
-import com.example.testapp.data.createuser.ErrorCreateUser
-import com.example.testapp.data.database.entity.Users
+import com.example.testapp.data.models.createuser.CreateUserModel
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

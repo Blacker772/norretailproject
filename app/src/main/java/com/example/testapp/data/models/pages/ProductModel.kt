@@ -1,4 +1,4 @@
-package com.example.testapp.data.pages
+package com.example.testapp.data.models.pages
 
 import javax.inject.Inject
 

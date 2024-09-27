@@ -3,7 +3,6 @@ package com.example.testapp.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testapp.databinding.ActivityMainBinding
-import com.yandex.mapkit.mapview.MapView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import coil.load
-import com.example.testapp.data.pages.ShopModel
+import com.example.testapp.data.models.pages.ShopModel
 import com.example.testapp.databinding.ItemShopBinding
 
 class PointAdapter: Adapter<PointAdapter.PointViewHolder>() {

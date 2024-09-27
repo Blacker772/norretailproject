@@ -2,11 +2,10 @@ package com.example.testapp.ui.log_in
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testapp.data.auth.AuthModel
+import com.example.testapp.data.models.auth.AuthModel
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

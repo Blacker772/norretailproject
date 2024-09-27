@@ -25,7 +25,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "MAPKIT_API_KEY", "\"${rootProject.extra["mapkitApiKey"]}\"")
         buildConfigField("String", "API_SERVER", "\"${rootProject.extra["apiServer"]}\"")
     }
 
@@ -71,13 +70,6 @@ tasks.withType<HtmlDependencyReportTask>() {
 
 //noinspection UseTomlInstead
 dependencies {
-
-    //noinspection GradleDependency
-    implementation ("com.yandex.android:maps.mobile:4.8.0-full")
-
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
-
-    implementation(libs.car.ui.lib)
     //Retrofit
     val retrofitVersion = "2.11.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")

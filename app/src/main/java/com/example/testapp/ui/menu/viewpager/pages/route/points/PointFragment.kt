@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapp.R
-import com.example.testapp.data.pages.ShopModel
+import com.example.testapp.data.models.pages.ShopModel
 import com.example.testapp.databinding.FragmentPointBinding
 
 class PointFragment : Fragment() {

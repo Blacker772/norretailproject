@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.example.testapp.data.pages.ProductModel
+import com.example.testapp.data.models.pages.ProductModel
 import com.example.testapp.databinding.ItemCreateBinding
 
 class CreateOrderAdapter: Adapter<CreateOrderAdapter.CreateViewHolder>() {

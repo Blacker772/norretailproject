@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
-        android:name="com.example.testapp.ui.menu.viewpager.ViewPagerFragment"
+        android:name="com.example.testapp.ui.menu.viewpager.vpcomponents.ViewPagerFragment"
         android:label="fragment_viewpager"
         tools:layout="@layout/fragment_viewpager" >
         <action

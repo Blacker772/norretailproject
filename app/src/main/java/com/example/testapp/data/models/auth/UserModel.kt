@@ -1,4 +1,4 @@
-package com.example.testapp.data.auth
+package com.example.testapp.data.models.auth
 
 import javax.inject.Inject
 

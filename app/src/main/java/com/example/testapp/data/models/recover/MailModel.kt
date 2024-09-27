@@ -1,4 +1,4 @@
-package com.example.testapp.data.recover
+package com.example.testapp.data.models.recover
 
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject

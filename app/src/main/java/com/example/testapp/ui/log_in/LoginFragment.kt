@@ -1,7 +1,7 @@
 package com.example.testapp.ui.log_in
 
-import android.animation.ValueAnimator
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
-import com.example.testapp.data.auth.AuthModel
+import com.example.testapp.data.models.auth.AuthModel
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.databinding.FragmentLoginBinding
 import com.google.android.material.textfield.TextInputLayout
@@ -67,6 +67,7 @@ class LoginFragment : Fragment() {
                             viewModel.authorization(AuthModel(login, password))
                         }
                     } catch (e: Exception) {
+                        Log.d("ERRRRROORRR", "onViewCreated: $e")
                         showToast(e.message.toString())
                     }
                 }

@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.testapp.R
+import com.example.testapp.data.database.entity.Clients
 import com.example.testapp.databinding.FragmentDetailsRouteBinding
-import com.example.testapp.data.pages.ClientModel
 
 
+@Suppress("DEPRECATION")
 class DetailsRouteFragment : Fragment() {
 
     private var binding: FragmentDetailsRouteBinding? = null
@@ -40,7 +41,7 @@ class DetailsRouteFragment : Fragment() {
         //Получение данных из аргументов
         val route = arguments?.let {
             if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable("client", ClientModel::class.java)
+                it.getParcelable("client", Clients::class.java)
             } else {
                 it.getParcelable("client")
             }

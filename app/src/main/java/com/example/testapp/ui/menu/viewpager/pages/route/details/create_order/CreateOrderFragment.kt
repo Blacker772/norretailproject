@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapp.R
-import com.example.testapp.data.pages.ProductModel
+import com.example.testapp.data.models.pages.ProductModel
 import com.example.testapp.databinding.FragmentCreateOrderBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -85,10 +84,10 @@ class CreateOrderFragment : Fragment() {
         dialog.setContentView(view)
 
         val btApplyFilters = view.findViewById<Button>(R.id.btnApplyFilters)
-        val etGroup = view.findViewById<EditText>(R.id.etGroup)
+//        val etGroup = view.findViewById<EditText>(R.id.etGroup)
 
         btApplyFilters.setOnClickListener {
-            val group = etGroup.text.toString()
+//            val group = etGroup.text.toString()
             dialog.dismiss()
         }
         dialog.show()

@@ -12,8 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testapp.R
+import com.example.testapp.data.database.entity.Clients
 import com.example.testapp.databinding.FragmentRouteBinding
-import com.example.testapp.data.pages.ClientModel
+import com.example.testapp.ui.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -22,13 +23,9 @@ class RouteFragment : Fragment() {
 
     private var binding: FragmentRouteBinding? = null
     private val adapter = RouteAdapter()
-    private val viewModel by viewModels<RouteViewModel>()
+    private val viewModel by viewModels<SharedViewModel>(ownerProducer = {requireParentFragment()})
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRouteBinding.inflate(inflater, container, false)
         initRV()
         return binding?.root
@@ -38,21 +35,60 @@ class RouteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            viewModel.state.collect {
+            viewModel.state.collect{
                 onChangeState(it)
             }
         }
-        viewModel.getClients()
+        viewModel.getClientDB()
 
+        //Список клиентов по поиску
+        lifecycleScope.launch {
+            viewModel.search.collect{
+                adapter.filter(it)
 
+                if (it.isEmpty()){
+                    binding?.rvRoute?.scrollToPosition(0)
+                }
+            }
+        }
     }
 
+    private fun onChangeState(state: UiStateRoute) {
+        binding?.apply {
+            when (state) {
+                is UiStateRoute.Loading -> {
+                    progressBar.isVisible = state.isLoading
+                }
+
+                is UiStateRoute.Error -> {
+                    progressBar.isVisible = false
+                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_LONG).show()
+                }
+
+                is UiStateRoute.Data -> {
+                    progressBar.isVisible = false
+                    adapter.originalList = state.data
+                    adapter.submitList(state.data)
+                }
+
+                else -> {
+                    progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
+    //Инициализация RV
     private fun initRV() {
         binding?.rvRoute?.adapter = adapter
-        binding?.rvRoute?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding?.rvRoute?.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
 
         adapter.onItemClickListener {
-            val client = ClientModel(
+            val client = Clients(
                 it.id,
                 it.nUser,
                 it.name,
@@ -70,30 +106,6 @@ class RouteFragment : Fragment() {
                 R.id.action_viewPagerFragment_to_detailsRouteFragment,
                 bundle
             )
-        }
-    }
-
-    private fun onChangeState(state: UiStateRoute) {
-        binding?.apply {
-            when (state) {
-                is UiStateRoute.Loading -> {
-                    progressBar.isVisible = state.isLoading
-                }
-
-                is UiStateRoute.Error -> {
-                    progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "${state.message}", Toast.LENGTH_SHORT).show()
-                }
-
-                is UiStateRoute.Data -> {
-                    adapter.submitList(state.data)
-                    progressBar.isVisible = false
-                }
-
-                else -> {
-                    progressBar.isVisible = false
-                }
-            }
         }
     }
 }

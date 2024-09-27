@@ -1,4 +1,4 @@
-package com.example.testapp.data.channels
+package com.example.testapp.data.models.channels
 
 import com.google.gson.annotations.SerializedName
 import javax.inject.Inject

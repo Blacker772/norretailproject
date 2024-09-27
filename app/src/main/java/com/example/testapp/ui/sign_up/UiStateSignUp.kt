@@ -1,6 +1,6 @@
 package com.example.testapp.ui.sign_up
 
-import com.example.testapp.data.createuser.ErrorCreateUser
+import com.example.testapp.data.models.createuser.ErrorCreateUser
 
 sealed class UiStateSignUp {
     data class Loading(val isLoading: Boolean): UiStateSignUp()

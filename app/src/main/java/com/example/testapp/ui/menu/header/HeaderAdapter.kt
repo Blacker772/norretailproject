@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
-import com.example.testapp.data.pages.ButtonModel
+import com.example.testapp.data.models.pages.ButtonModel
 import com.example.testapp.databinding.ButtonItemBinding
 
 class HeaderAdapter:Adapter<HeaderAdapter.MainViewHolder>() {

@@ -1,14 +1,13 @@
 package com.example.testapp.repository
 
-import android.util.Log
-import com.example.testapp.data.auth.AuthModel
-import com.example.testapp.data.createuser.CreateUserModel
+import com.example.testapp.data.models.auth.AuthModel
+import com.example.testapp.data.models.createuser.CreateUserModel
 import com.example.testapp.data.database.DAO
+import com.example.testapp.data.database.entity.Clients
 import com.example.testapp.data.database.entity.SaveUser
 import com.example.testapp.data.database.entity.Users
 import com.example.testapp.data.response.ApiService
 import com.example.testapp.ui.log_in.UiStateLogIn
-import com.example.testapp.ui.menu.viewpager.pages.route.UiStateRoute
 import com.example.testapp.ui.recover.mail.UiStateMail
 import com.example.testapp.ui.sign_up.UiStateSignUp
 import kotlinx.coroutines.flow.Flow
@@ -107,22 +106,27 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getClientsRepo(): Flow<UiStateRoute> = flow {
+
+    //API
+    //Получение клиентов из сервера и добавление в БД
+    //RouteFragment
+    suspend fun insertClientsInDBRepo() {
         try {
             val result = apiService.getClients()
             if (result.isSuccessful) {
-                val requestBody = result.body()
-                if (requestBody != null) {
-                    emit(UiStateRoute.Data(requestBody))
-                } else {
-                    throw Exception("response body is null")
+                result.body()?.let {
+                    dao.insertClients(it)
                 }
-            } else {
-                val errorBody = result.errorBody()?.string() ?: "unknown error"
-                emit(UiStateRoute.Error(errorBody))
             }
         } catch (e: Exception) {
-            emit(UiStateRoute.Error(e.message))
+            e.printStackTrace()
         }
+    }
+
+    //БД
+    //Получение клиентов из БД
+    //RouteFragment
+    fun getClientsDBRepo(): Flow<List<Clients>> {
+        return dao.getClients()
     }
 }

@@ -1,6 +1,6 @@
 package com.example.testapp.ui.log_in
 
-import com.example.testapp.data.auth.UserModel
+import com.example.testapp.data.models.auth.UserModel
 
 sealed class UiStateLogIn {
     data class Loading(val isLoading: Boolean): UiStateLogIn()

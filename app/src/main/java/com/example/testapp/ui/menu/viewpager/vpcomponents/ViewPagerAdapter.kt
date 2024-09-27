@@ -1,4 +1,4 @@
-package com.example.testapp.ui.menu.viewpager
+package com.example.testapp.ui.menu.viewpager.vpcomponents
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

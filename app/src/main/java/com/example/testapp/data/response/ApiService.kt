@@ -1,10 +1,10 @@
 package com.example.testapp.data.response
-import com.example.testapp.data.auth.AuthModel
-import com.example.testapp.data.createuser.CreateUserModel
-import com.example.testapp.data.auth.UserModel
-import com.example.testapp.data.channels.ChannelsModel
-import com.example.testapp.data.createuser.ErrorCreateUser
-import com.example.testapp.data.pages.ClientModel
+import com.example.testapp.data.models.auth.AuthModel
+import com.example.testapp.data.models.createuser.CreateUserModel
+import com.example.testapp.data.models.auth.UserModel
+import com.example.testapp.data.models.channels.ChannelsModel
+import com.example.testapp.data.models.createuser.ErrorCreateUser
+import com.example.testapp.data.database.entity.Clients
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +29,7 @@ interface ApiService {
     @GET("/user/find/email")
     suspend fun checkMail(@Query("email") mail: String): Response<CreateUserModel>
 
+    //Получение
     @GET("/clients")
-    suspend fun getClients(): Response<List<ClientModel>>
+    suspend fun getClients(): Response<List<Clients>>
 }

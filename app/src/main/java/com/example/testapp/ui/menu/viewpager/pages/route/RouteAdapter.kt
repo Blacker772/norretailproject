@@ -5,14 +5,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.testapp.data.pages.ClientModel
+import com.example.testapp.data.database.entity.Clients
 import com.example.testapp.databinding.MainItemBinding
 
-class RouteAdapter : ListAdapter<ClientModel, RouteAdapter.RouteViewHolder>(DIFF_UTIL) {
+class RouteAdapter : ListAdapter<Clients, RouteAdapter.RouteViewHolder>(DIFF_UTIL) {
 
-    private var onItemClick: ((client: ClientModel) -> Unit)? = null
-    fun onItemClickListener(onItemClick: (client: ClientModel) -> Unit) {
+    var originalList = listOf<Clients>()
+    private var onItemClick: ((client: Clients) -> Unit)? = null
+    fun onItemClickListener(onItemClick: (client: Clients) -> Unit) {
         this.onItemClick = onItemClick
+    }
+
+    fun filter(query: String) {
+        val filteredList = if (query.isEmpty()) {
+            originalList
+
+        } else {
+            originalList.filter {
+                it.name.contains(query, ignoreCase = true)
+                        || it.nUser.contains(query, ignoreCase = true)
+                        || it.deliveryAddress.contains(query, ignoreCase = true)
+            }
+        }
+        submitList(filteredList) // передаем отфильтрованный список, а не строку
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RouteViewHolder {
@@ -27,7 +42,7 @@ class RouteAdapter : ListAdapter<ClientModel, RouteAdapter.RouteViewHolder>(DIFF
 
     inner class RouteViewHolder(private val binding: MainItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ClientModel, onItemClick: ((client: ClientModel) -> Unit)?) {
+        fun bind(data: Clients, onItemClick: ((client: Clients) -> Unit)?) {
             binding.apply {
                 tvCode.text = data.nUser
                 tvName.text = data.name
@@ -40,17 +55,17 @@ class RouteAdapter : ListAdapter<ClientModel, RouteAdapter.RouteViewHolder>(DIFF
     }
 
     companion object {
-        val DIFF_UTIL = object : DiffUtil.ItemCallback<ClientModel>() {
+        val DIFF_UTIL = object : DiffUtil.ItemCallback<Clients>() {
             override fun areItemsTheSame(
-                oldItem: ClientModel,
-                newItem: ClientModel,
+                oldItem: Clients,
+                newItem: Clients,
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ClientModel,
-                newItem: ClientModel,
+                oldItem: Clients,
+                newItem: Clients,
             ): Boolean {
                 return oldItem.name == newItem.name &&
                         oldItem.inn == newItem.inn &&
