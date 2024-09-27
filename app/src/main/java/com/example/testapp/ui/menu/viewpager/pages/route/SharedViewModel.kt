@@ -1,11 +1,10 @@
-package com.example.testapp.ui
+package com.example.testapp.ui.menu.viewpager.pages.route
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testapp.R
 import com.example.testapp.data.models.pages.ButtonModel
 import com.example.testapp.repository.Repository
-import com.example.testapp.ui.menu.viewpager.pages.route.UiStateRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

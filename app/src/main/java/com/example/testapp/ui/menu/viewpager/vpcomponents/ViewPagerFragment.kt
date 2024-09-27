@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.testapp.R
 import com.example.testapp.databinding.FragmentViewpagerBinding
-import com.example.testapp.ui.SharedViewModel
+import com.example.testapp.ui.menu.viewpager.pages.route.SharedViewModel
 import com.example.testapp.ui.menu.header.HeaderAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
